@@ -1,0 +1,74 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#include "MessageProcessors/AssistProcessor.h"
+
+#include "GameFramework/PlayerState.h"
+#include "Messages/HunterVerbMessage.h"
+#include "Messages/HunterVerbMessageHelpers.h"
+#include "NativeGameplayTags.h"
+
+#include UE_INLINE_GENERATED_CPP_BY_NAME(AssistProcessor)
+
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Elimination_Message, "Hunter.Elimination.Message");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Damage_Message, "Hunter.Damage.Message");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Assist_Message, "Hunter.Assist.Message");
+
+void UAssistProcessor::StartListening()
+{
+	UGameplayMessageSubsystem& MessageSubsystem = UGameplayMessageSubsystem::Get(this);
+	AddListenerHandle(MessageSubsystem.RegisterListener(TAG_Hunter_Elimination_Message, this, &ThisClass::OnEliminationMessage));
+	AddListenerHandle(MessageSubsystem.RegisterListener(TAG_Hunter_Damage_Message, this, &ThisClass::OnDamageMessage));
+}
+
+void UAssistProcessor::OnDamageMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload)
+{
+	if (Payload.Instigator != Payload.Target)
+	{
+		if (APlayerState* InstigatorPS = UHunterVerbMessageHelpers::GetPlayerStateFromObject(Payload.Instigator))
+		{
+			if (APlayerState* TargetPS = UHunterVerbMessageHelpers::GetPlayerStateFromObject(Payload.Target))
+			{
+				FPlayerAssistDamageTracking& Damage = DamageHistory.FindOrAdd(TargetPS);
+				float& DamageTotalFromTarget = Damage.AccumulatedDamageByPlayer.FindOrAdd(InstigatorPS);
+				DamageTotalFromTarget += Payload.Magnitude;
+			}
+		}
+	}
+}
+
+
+void UAssistProcessor::OnEliminationMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload)
+{
+	if (APlayerState* TargetPS = Cast<APlayerState>(Payload.Target))
+	{
+		// Grant an assist to each player who damaged the target but wasn't the instigator
+		if (FPlayerAssistDamageTracking* DamageOnTarget = DamageHistory.Find(TargetPS))
+		{
+			for (const auto& KVP : DamageOnTarget->AccumulatedDamageByPlayer)
+			{
+				if (APlayerState* AssistPS = KVP.Key)
+				{
+					if (AssistPS != Payload.Instigator)
+					{
+						FHunterVerbMessage AssistMessage;
+						AssistMessage.Verb = TAG_Hunter_Assist_Message;
+						AssistMessage.Instigator = AssistPS;
+						//@TODO: Get default tags from a player state or save off most recent tags during assist damage?
+						//AssistMessage.InstigatorTags = ;
+						AssistMessage.Target = TargetPS;
+						AssistMessage.TargetTags = Payload.TargetTags;
+						AssistMessage.ContextTags = Payload.ContextTags;
+						AssistMessage.Magnitude = KVP.Value;
+
+						UGameplayMessageSubsystem& MessageSubsystem = UGameplayMessageSubsystem::Get(this);
+						MessageSubsystem.BroadcastMessage(AssistMessage.Verb, AssistMessage);
+					}
+				}
+			}
+
+			// Clear the damage log for the eliminated player
+			DamageHistory.Remove(TargetPS);
+		}
+	}
+}
+

@@ -1,14 +1,16 @@
-# Unreal Engine project .gitignore file
-# Ignore all files by default
-* 
-!Source/
-!Config/
-!Content/
-!Plugins/
-!Plugins/**/Source/
+# Ignore everything
+*
+# But traverse into directories (so later ! rules work)
+!*/
 
-!Source/**
-!Config/**
-!Plugins/**/Source/**
-!.gitignore
-!*.uproject
+# Keep repo meta & project file
+!/.gitignore
+!/*.uproject
+
+# Keep project code & config
+!/Source/**
+!/Config/**
+
+# Keep plugins: descriptor + source
+!/Plugins/**/*.uplugin
+!/Plugins/**/Source/**
