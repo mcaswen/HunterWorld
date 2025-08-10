@@ -1,0 +1,14 @@
+# Unreal Engine project .gitignore file
+# Ignore all files by default
+* 
+!Source/
+!Config/
+!Content/
+!Plugins/
+!Plugins/**/Source/
+
+!Source/**
+!Config/**
+!Plugins/**/Source/**
+!.gitignore
+!*.uproject
