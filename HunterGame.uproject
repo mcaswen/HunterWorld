@@ -370,6 +370,10 @@
 		{
 			"Name": "Reflex",
 			"Enabled": true
+		},
+		{
+			"Name": "RiderLink",
+			"Enabled": false
 		}
 	],
 	"EpicSampleNameHash": "451731683"
