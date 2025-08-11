@@ -8,7 +8,7 @@
 #include "GameFramework/Pawn.h"
 #include "EnhancedInputSubsystems.h"
 #include "Engine/LocalPlayer.h"
-#include "Character/HunterHeroComponent.h"
+#include "Character/LyraHeroComponent.h"
 #include "GameFeatures/GameFeatureAction_WorldActionBase.h"
 #include "Input/HunterInputConfig.h"
 
@@ -113,7 +113,7 @@ void UGameFeatureAction_AddInputBinding::HandlePawnExtension(AActor* Actor, FNam
 	{
 		RemoveInputMapping(AsPawn, ActiveData);
 	}
-	else if ((EventName == UGameFrameworkComponentManager::NAME_ExtensionAdded) || (EventName == UHunterHeroComponent::NAME_BindInputsNow))
+	else if ((EventName == UGameFrameworkComponentManager::NAME_ExtensionAdded) || (EventName == ULyraHeroComponent::NAME_BindInputsNow))
 	{
 		AddInputMappingForPlayer(AsPawn, ActiveData);
 	}
@@ -127,7 +127,7 @@ void UGameFeatureAction_AddInputBinding::AddInputMappingForPlayer(APawn* Pawn, F
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* InputSystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
-			UHunterHeroComponent* HeroComponent = Pawn->FindComponentByClass<UHunterHeroComponent>();
+			ULyraHeroComponent* HeroComponent = Pawn->FindComponentByClass<ULyraHeroComponent>();
 			if (HeroComponent && HeroComponent->IsReadyToBindInputs())
 			{
 				for (const TSoftObjectPtr<const UHunterInputConfig>& Entry : InputConfigs)
@@ -155,7 +155,7 @@ void UGameFeatureAction_AddInputBinding::RemoveInputMapping(APawn* Pawn, FPerCon
 	{
 		if (UEnhancedInputLocalPlayerSubsystem* InputSystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>())
 		{
-			if (UHunterHeroComponent* HeroComponent = Pawn->FindComponentByClass<UHunterHeroComponent>())
+			if (ULyraHeroComponent* HeroComponent = Pawn->FindComponentByClass<ULyraHeroComponent>())
 			{
 				for (const TSoftObjectPtr<const UHunterInputConfig>& Entry : InputConfigs)
 				{

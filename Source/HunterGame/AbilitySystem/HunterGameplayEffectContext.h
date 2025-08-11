@@ -8,7 +8,7 @@
 
 class AActor;
 class FArchive;
-class IHunterAbilitySourceInterface;
+class ILyraAbilitySourceInterface;
 class UObject;
 class UPhysicalMaterial;
 
@@ -31,10 +31,10 @@ struct FHunterGameplayEffectContext : public FGameplayEffectContext
 	static HUNTERGAME_API FHunterGameplayEffectContext* ExtractEffectContext(struct FGameplayEffectContextHandle Handle);
 
 	/** Sets the object used as the ability source */
-	void SetAbilitySource(const IHunterAbilitySourceInterface* InObject, float InSourceLevel);
+	void SetAbilitySource(const ILyraAbilitySourceInterface* InObject, float InSourceLevel);
 
 	/** Returns the ability source interface associated with the source object. Only valid on the authority. */
-	const IHunterAbilitySourceInterface* GetAbilitySource() const;
+	const ILyraAbilitySourceInterface* GetAbilitySource() const;
 
 	virtual FGameplayEffectContext* Duplicate() const override
 	{
@@ -65,7 +65,7 @@ public:
 	int32 CartridgeID = -1;
 
 protected:
-	/** Ability Source object (should implement IHunterAbilitySourceInterface). NOT replicated currently */
+	/** Ability Source object (should implement ILyraAbilitySourceInterface). NOT replicated currently */
 	UPROPERTY()
 	TWeakObjectPtr<const UObject> AbilitySourceObject;
 };

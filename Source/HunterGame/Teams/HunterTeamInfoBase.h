@@ -9,7 +9,7 @@
 
 namespace EEndPlayReason { enum Type : int; }
 
-class UHunterTeamCreationComponent;
+class ULyraTeamCreationComponent;
 class UHunterTeamSubsystem;
 class UObject;
 struct FFrame;
@@ -40,7 +40,7 @@ private:
 	void OnRep_TeamId();
 
 public:
-	friend UHunterTeamCreationComponent;
+	friend ULyraTeamCreationComponent;
 
 	UPROPERTY(Replicated)
 	FGameplayTagStackContainer TeamTags;

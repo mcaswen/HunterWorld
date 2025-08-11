@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Inventory/HunterInventoryItemDefinition.h"
+#include "Inventory/LyraInventoryItemDefinition.h"
 
 #include "InventoryFragment_ReticleConfig.generated.h"
 
@@ -10,7 +10,7 @@ class UHunterReticleWidgetBase;
 class UObject;
 
 UCLASS()
-class UInventoryFragment_ReticleConfig : public UHunterInventoryItemFragment
+class UInventoryFragment_ReticleConfig : public ULyraInventoryItemFragment
 {
 	GENERATED_BODY()
 

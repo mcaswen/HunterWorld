@@ -3,8 +3,8 @@
 #include "MessageProcessors/AssistProcessor.h"
 
 #include "GameFramework/PlayerState.h"
-#include "Messages/HunterVerbMessage.h"
-#include "Messages/HunterVerbMessageHelpers.h"
+#include "Messages/LyraVerbMessage.h"
+#include "Messages/LyraVerbMessageHelpers.h"
 #include "NativeGameplayTags.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(AssistProcessor)
@@ -20,13 +20,13 @@ void UAssistProcessor::StartListening()
 	AddListenerHandle(MessageSubsystem.RegisterListener(TAG_Hunter_Damage_Message, this, &ThisClass::OnDamageMessage));
 }
 
-void UAssistProcessor::OnDamageMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload)
+void UAssistProcessor::OnDamageMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload)
 {
 	if (Payload.Instigator != Payload.Target)
 	{
-		if (APlayerState* InstigatorPS = UHunterVerbMessageHelpers::GetPlayerStateFromObject(Payload.Instigator))
+		if (APlayerState* InstigatorPS = ULyraVerbMessageHelpers::GetPlayerStateFromObject(Payload.Instigator))
 		{
-			if (APlayerState* TargetPS = UHunterVerbMessageHelpers::GetPlayerStateFromObject(Payload.Target))
+			if (APlayerState* TargetPS = ULyraVerbMessageHelpers::GetPlayerStateFromObject(Payload.Target))
 			{
 				FPlayerAssistDamageTracking& Damage = DamageHistory.FindOrAdd(TargetPS);
 				float& DamageTotalFromTarget = Damage.AccumulatedDamageByPlayer.FindOrAdd(InstigatorPS);
@@ -37,7 +37,7 @@ void UAssistProcessor::OnDamageMessage(FGameplayTag Channel, const FHunterVerbMe
 }
 
 
-void UAssistProcessor::OnEliminationMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload)
+void UAssistProcessor::OnEliminationMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload)
 {
 	if (APlayerState* TargetPS = Cast<APlayerState>(Payload.Target))
 	{
@@ -50,7 +50,7 @@ void UAssistProcessor::OnEliminationMessage(FGameplayTag Channel, const FHunterV
 				{
 					if (AssistPS != Payload.Instigator)
 					{
-						FHunterVerbMessage AssistMessage;
+						FLyraVerbMessage AssistMessage;
 						AssistMessage.Verb = TAG_Hunter_Assist_Message;
 						AssistMessage.Instigator = AssistPS;
 						//@TODO: Get default tags from a player state or save off most recent tags during assist damage?

@@ -2,9 +2,9 @@
 
 #include "HunterReticleWidgetBase.h"
 
-#include "Inventory/HunterInventoryItemInstance.h"
-#include "Weapons/HunterRangedWeaponInstance.h"
-#include "Weapons/HunterWeaponInstance.h"
+#include "Inventory/LyraInventoryItemInstance.h"
+#include "Weapons/LyraRangedWeaponInstance.h"
+#include "Weapons/LyraWeaponInstance.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterReticleWidgetBase)
 
@@ -13,13 +13,13 @@ UHunterReticleWidgetBase::UHunterReticleWidgetBase(const FObjectInitializer& Obj
 {
 }
 
-void UHunterReticleWidgetBase::InitializeFromWeapon(UHunterWeaponInstance* InWeapon)
+void UHunterReticleWidgetBase::InitializeFromWeapon(ULyraWeaponInstance* InWeapon)
 {
 	WeaponInstance = InWeapon;
 	InventoryInstance = nullptr;
 	if (WeaponInstance)
 	{
-		InventoryInstance = Cast<UHunterInventoryItemInstance>(WeaponInstance->GetInstigator());
+		InventoryInstance = Cast<ULyraInventoryItemInstance>(WeaponInstance->GetInstigator());
 	}
 	OnWeaponInitialized();
 }
@@ -27,7 +27,7 @@ void UHunterReticleWidgetBase::InitializeFromWeapon(UHunterWeaponInstance* InWea
 
 float UHunterReticleWidgetBase::ComputeSpreadAngle() const
 {
-	if (const UHunterRangedWeaponInstance* RangedWeapon = Cast<const UHunterRangedWeaponInstance>(WeaponInstance))
+	if (const ULyraRangedWeaponInstance* RangedWeapon = Cast<const ULyraRangedWeaponInstance>(WeaponInstance))
 	{
 		const float BaseSpreadAngle = RangedWeapon->GetCalculatedSpreadAngle();
 		const float SpreadAngleMultiplier = RangedWeapon->GetCalculatedSpreadAngleMultiplier();
@@ -43,7 +43,7 @@ float UHunterReticleWidgetBase::ComputeSpreadAngle() const
 
 bool UHunterReticleWidgetBase::HasFirstShotAccuracy() const
 {
-	if (const UHunterRangedWeaponInstance* RangedWeapon = Cast<const UHunterRangedWeaponInstance>(WeaponInstance))
+	if (const ULyraRangedWeaponInstance* RangedWeapon = Cast<const ULyraRangedWeaponInstance>(WeaponInstance))
 	{
 		return RangedWeapon->HasFirstShotAccuracy();
 	}

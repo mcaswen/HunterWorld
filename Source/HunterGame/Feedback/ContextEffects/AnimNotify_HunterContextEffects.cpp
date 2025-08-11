@@ -3,7 +3,7 @@
 
 #include "AnimNotify_HunterContextEffects.h"
 #include "Feedback/ContextEffects/HunterContextEffectsLibrary.h"
-#include "HunterContextEffectsInterface.h"
+#include "LyraContextEffectsInterface.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/World.h"
 #include "HunterContextEffectsSubsystem.h"
@@ -85,7 +85,7 @@ void UAnimNotify_HunterContextEffects::Notify(USkeletalMeshComponent* MeshComp, 
 			TArray<UObject*> HunterContextEffectImplementingObjects;
 
 			// Determine if the Owning Actor is one of the Objects that implements the Context Effects Interface
-			if (OwningActor->Implements<UHunterContextEffectsInterface>())
+			if (OwningActor->Implements<ULyraContextEffectsInterface>())
 			{
 				// If so, add it to the Array
 				HunterContextEffectImplementingObjects.Add(OwningActor);
@@ -97,7 +97,7 @@ void UAnimNotify_HunterContextEffects::Notify(USkeletalMeshComponent* MeshComp, 
 				if (Component)
 				{
 					// If the Component implements the Context Effects Interface, add it to the list
-					if (Component->Implements<UHunterContextEffectsInterface>())
+					if (Component->Implements<ULyraContextEffectsInterface>())
 					{
 						HunterContextEffectImplementingObjects.Add(Component);
 					}
@@ -110,7 +110,7 @@ void UAnimNotify_HunterContextEffects::Notify(USkeletalMeshComponent* MeshComp, 
 				if (HunterContextEffectImplementingObject)
 				{
 					// If the object is still valid, Execute the AnimMotionEffect Event on it, passing in relevant data
-					IHunterContextEffectsInterface::Execute_AnimMotionEffect(HunterContextEffectImplementingObject,
+					ILyraContextEffectsInterface::Execute_AnimMotionEffect(HunterContextEffectImplementingObject,
 						(bAttached ? SocketName : FName("None")),
 						Effect, MeshComp, LocationOffset, RotationOffset,
 						Animation, bHitSuccess, HitResult, Contexts, VFXProperties.Scale,

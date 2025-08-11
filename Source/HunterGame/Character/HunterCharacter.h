@@ -20,9 +20,9 @@ class FLifetimeProperty;
 class IRepChangedPropertyTracker;
 class UAbilitySystemComponent;
 class UInputComponent;
-class UHunterAbilitySystemComponent;
+class ULyraAbilitySystemComponent;
 class UHunterCameraComponent;
-class UHunterHealthComponent;
+class ULyraHealthComponent;
 class UHunterPawnExtensionComponent;
 class UObject;
 struct FFrame;
@@ -110,7 +110,7 @@ public:
 	UE_API AHunterPlayerState* GetHunterPlayerState() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Hunter|Character")
-	UE_API UHunterAbilitySystemComponent* GetHunterAbilitySystemComponent() const;
+	UE_API ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const;
 	UE_API virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	UE_API virtual void GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const override;
@@ -195,7 +195,7 @@ private:
 	TObjectPtr<UHunterPawnExtensionComponent> PawnExtComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hunter|Character", Meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UHunterHealthComponent> HealthComponent;
+	TObjectPtr<ULyraHealthComponent> HealthComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Hunter|Character", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UHunterCameraComponent> CameraComponent;

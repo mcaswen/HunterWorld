@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "ShooterTestsInputTestHelper.h"
 
 class AHunterCharacter;
@@ -48,7 +48,7 @@ private:
 	USkeletalMeshComponent* SkeletalMeshComponent;
 
 	/** Reference to the player's ability system component. */
-	UHunterAbilitySystemComponent* AbilitySystemComponent{ nullptr };
+	ULyraAbilitySystemComponent* AbilitySystemComponent{ nullptr };
 
 	/** Reference to the player's spawning gameplay effect. */
 	FGameplayTag GameplayCueCharacterSpawnTag;

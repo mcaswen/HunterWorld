@@ -6,7 +6,7 @@
 
 #include "HunterTeamPublicInfo.generated.h"
 
-class UHunterTeamCreationComponent;
+class ULyraTeamCreationComponent;
 class UHunterTeamDisplayAsset;
 class UObject;
 struct FFrame;
@@ -16,7 +16,7 @@ class AHunterTeamPublicInfo : public AHunterTeamInfoBase
 {
 	GENERATED_BODY()
 
-	friend UHunterTeamCreationComponent;
+	friend ULyraTeamCreationComponent;
 
 public:
 	AHunterTeamPublicInfo(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());

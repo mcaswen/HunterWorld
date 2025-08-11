@@ -12,7 +12,7 @@ struct FWorldContext;
 struct FComponentRequestHandle;
 
 USTRUCT()
-struct FHunterHUDLayoutRequest
+struct FLyraHUDLayoutRequest
 {
 	GENERATED_BODY()
 
@@ -68,7 +68,7 @@ public:
 private:
 	// Layout to add to the HUD
 	UPROPERTY(EditAnywhere, Category=UI, meta=(TitleProperty="{LayerID} -> {LayoutClass}"))
-	TArray<FHunterHUDLayoutRequest> Layout;
+	TArray<FLyraHUDLayoutRequest> Layout;
 
 	// Widgets to add to the HUD
 	UPROPERTY(EditAnywhere, Category=UI, meta=(TitleProperty="{SlotID} -> {WidgetClass}"))

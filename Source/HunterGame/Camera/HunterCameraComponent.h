@@ -8,15 +8,15 @@
 #include "HunterCameraComponent.generated.h"
 
 class UCanvas;
-class UHunterCameraMode;
-class UHunterCameraModeStack;
+class ULyraCameraMode;
+class ULyraCameraModeStack;
 class UObject;
 struct FFrame;
 struct FGameplayTag;
 struct FMinimalViewInfo;
 template <class TClass> class TSubclassOf;
 
-DECLARE_DELEGATE_RetVal(TSubclassOf<UHunterCameraMode>, FHunterCameraModeDelegate);
+DECLARE_DELEGATE_RetVal(TSubclassOf<ULyraCameraMode>, FLyraCameraModeDelegate);
 
 
 /**
@@ -41,7 +41,7 @@ public:
 	virtual AActor* GetTargetActor() const { return GetOwner(); }
 
 	// Delegate used to query for the best camera mode.
-	FHunterCameraModeDelegate DetermineCameraModeDelegate;
+	FLyraCameraModeDelegate DetermineCameraModeDelegate;
 
 	// Add an offset to the field of view.  The offset is only for one frame, it gets cleared once it is applied.
 	void AddFieldOfViewOffset(float FovOffset) { FieldOfViewOffset += FovOffset; }
@@ -62,7 +62,7 @@ protected:
 
 	// Stack used to blend the camera modes.
 	UPROPERTY()
-	TObjectPtr<UHunterCameraModeStack> CameraModeStack;
+	TObjectPtr<ULyraCameraModeStack> CameraModeStack;
 
 	// Offset applied to the field of view.  The offset is only for one frame, it gets cleared once it is applied.
 	float FieldOfViewOffset;

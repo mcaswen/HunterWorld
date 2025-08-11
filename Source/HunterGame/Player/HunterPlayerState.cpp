@@ -4,9 +4,9 @@
 
 #include "AbilitySystem/Attributes/HunterCombatSet.h"
 #include "AbilitySystem/Attributes/HunterHealthSet.h"
-#include "AbilitySystem/HunterAbilitySet.h"
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
-#include "Character/HunterPawnData.h"
+#include "AbilitySystem/LyraAbilitySet.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
+#include "Character/LyraPawnData.h"
 #include "Character/HunterPawnExtensionComponent.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "Engine/World.h"
@@ -16,7 +16,7 @@
 #include "GameModes/HunterGameMode.h"
 #include "HunterLogChannels.h"
 #include "HunterPlayerController.h"
-#include "Messages/HunterVerbMessage.h"
+#include "Messages/LyraVerbMessage.h"
 #include "Net/UnrealNetwork.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterPlayerState)
@@ -25,13 +25,13 @@ class AController;
 class APlayerState;
 class FLifetimeProperty;
 
-const FName AHunterPlayerState::NAME_HunterAbilityReady("HunterAbilitiesReady");
+const FName AHunterPlayerState::NAME_LyraAbilityReady("HunterAbilitiesReady");
 
 AHunterPlayerState::AHunterPlayerState(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, MyPlayerConnectionType(EHunterPlayerConnectionType::Player)
 {
-	AbilitySystemComponent = ObjectInitializer.CreateDefaultSubobject<UHunterAbilitySystemComponent>(this, TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent = ObjectInitializer.CreateDefaultSubobject<ULyraAbilitySystemComponent>(this, TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
@@ -110,7 +110,7 @@ void AHunterPlayerState::OnExperienceLoaded(const ULyraExperienceDefinition* /*C
 {
 	if (AHunterGameMode* HunterGameMode = GetWorld()->GetAuthGameMode<AHunterGameMode>())
 	{
-		if (const UHunterPawnData* NewPawnData = HunterGameMode->GetPawnDataForController(GetOwningController()))
+		if (const ULyraPawnData* NewPawnData = HunterGameMode->GetPawnDataForController(GetOwningController()))
 		{
 			SetPawnData(NewPawnData);
 		}
@@ -161,7 +161,7 @@ AHunterPlayerController* AHunterPlayerState::GetHunterPlayerController() const
 
 UAbilitySystemComponent* AHunterPlayerState::GetAbilitySystemComponent() const
 {
-	return GetHunterAbilitySystemComponent();
+	return GetLyraAbilitySystemComponent();
 }
 
 void AHunterPlayerState::PostInitializeComponents()
@@ -182,7 +182,7 @@ void AHunterPlayerState::PostInitializeComponents()
 	}
 }
 
-void AHunterPlayerState::SetPawnData(const UHunterPawnData* InPawnData)
+void AHunterPlayerState::SetPawnData(const ULyraPawnData* InPawnData)
 {
 	check(InPawnData);
 
@@ -200,7 +200,7 @@ void AHunterPlayerState::SetPawnData(const UHunterPawnData* InPawnData)
 	MARK_PROPERTY_DIRTY_FROM_NAME(ThisClass, PawnData, this);
 	PawnData = InPawnData;
 
-	for (const UHunterAbilitySet* AbilitySet : PawnData->AbilitySets)
+	for (const ULyraAbilitySet* AbilitySet : PawnData->AbilitySets)
 	{
 		if (AbilitySet)
 		{
@@ -208,7 +208,7 @@ void AHunterPlayerState::SetPawnData(const UHunterPawnData* InPawnData)
 		}
 	}
 
-	UGameFrameworkComponentManager::SendGameFrameworkComponentExtensionEvent(this, NAME_HunterAbilityReady);
+	UGameFrameworkComponentManager::SendGameFrameworkComponentExtensionEvent(this, NAME_LyraAbilityReady);
 	
 	ForceNetUpdate();
 }
@@ -289,7 +289,7 @@ bool AHunterPlayerState::HasStatTag(FGameplayTag Tag) const
 	return StatTags.ContainsTag(Tag);
 }
 
-void AHunterPlayerState::ClientBroadcastMessage_Implementation(const FHunterVerbMessage Message)
+void AHunterPlayerState::ClientBroadcastMessage_Implementation(const FLyraVerbMessage Message)
 {
 	// This check is needed to prevent running the action when in standalone mode
 	if (GetNetMode() == NM_Client)

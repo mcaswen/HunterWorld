@@ -2,7 +2,7 @@
 
 #include "SHitMarkerConfirmationWidget.h"
 
-#include "Weapons/HunterWeaponStateComponent.h"
+#include "Weapons/LyraWeaponStateComponent.h"
 
 class FPaintArgs;
 
@@ -35,7 +35,7 @@ int32 SHitMarkerConfirmationWidget::OnPaint(const FPaintArgs& Args, const FGeome
 		TArray<FHunterScreenSpaceHitLocation> LastWeaponDamageScreenLocations;
 		if (APlayerController* PC = MyContext.IsInitialized() ? MyContext.GetPlayerController() : nullptr)
 		{
-			if (UHunterWeaponStateComponent* WeaponStateComponent = PC->FindComponentByClass<UHunterWeaponStateComponent>())
+			if (ULyraWeaponStateComponent* WeaponStateComponent = PC->FindComponentByClass<ULyraWeaponStateComponent>())
 			{
 				WeaponStateComponent->GetLastWeaponDamageScreenLocations(/*out*/ LastWeaponDamageScreenLocations);
 			}
@@ -93,7 +93,7 @@ void SHitMarkerConfirmationWidget::Tick(const FGeometry& AllottedGeometry, const
 
 	if (APlayerController* PC = MyContext.IsInitialized() ? MyContext.GetPlayerController() : nullptr)
 	{
-		if (UHunterWeaponStateComponent* DamageMarkerComponent = PC->FindComponentByClass<UHunterWeaponStateComponent>())
+		if (ULyraWeaponStateComponent* DamageMarkerComponent = PC->FindComponentByClass<ULyraWeaponStateComponent>())
 		{
 			const double TimeSinceLastHitNotification = DamageMarkerComponent->GetTimeSinceLastHitNotification();
 			if (TimeSinceLastHitNotification < HitNotifyDuration)

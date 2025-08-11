@@ -10,12 +10,12 @@
 #include "HunterGameState.h"
 #include "System/HunterGameSession.h"
 #include "Player/HunterPlayerController.h"
-#include "Player/HunterPlayerBotController.h"
+#include "Player/LyraPlayerBotController.h"
 #include "Player/HunterPlayerState.h"
 #include "Character/HunterCharacter.h"
 #include "UI/HunterHUD.h"
 #include "Character/HunterPawnExtensionComponent.h"
-#include "Character/HunterPawnData.h"
+#include "Character/LyraPawnData.h"
 #include "GameModes/HunterWorldSettings.h"
 #include "GameModes/LyraExperienceDefinition.h"
 #include "GameModes/HunterExperienceManagerComponent.h"
@@ -42,14 +42,14 @@ AHunterGameMode::AHunterGameMode(const FObjectInitializer& ObjectInitializer)
 	HUDClass = AHunterHUD::StaticClass();
 }
 
-const UHunterPawnData* AHunterGameMode::GetPawnDataForController(const AController* InController) const
+const ULyraPawnData* AHunterGameMode::GetPawnDataForController(const AController* InController) const
 {
 	// See if pawn data is already set on the player state
 	if (InController != nullptr)
 	{
 		if (const AHunterPlayerState* HunterPS = InController->GetPlayerState<AHunterPlayerState>())
 		{
-			if (const UHunterPawnData* PawnData = HunterPS->GetPawnData<UHunterPawnData>())
+			if (const ULyraPawnData* PawnData = HunterPS->GetPawnData<ULyraPawnData>())
 			{
 				return PawnData;
 			}
@@ -331,7 +331,7 @@ bool AHunterGameMode::IsExperienceLoaded() const
 
 UClass* AHunterGameMode::GetDefaultPawnClassForController_Implementation(AController* InController)
 {
-	if (const UHunterPawnData* PawnData = GetPawnDataForController(InController))
+	if (const ULyraPawnData* PawnData = GetPawnDataForController(InController))
 	{
 		if (PawnData->PawnClass)
 		{
@@ -355,7 +355,7 @@ APawn* AHunterGameMode::SpawnDefaultPawnAtTransform_Implementation(AController* 
 		{
 			if (UHunterPawnExtensionComponent* PawnExtComp = UHunterPawnExtensionComponent::FindPawnExtensionComponent(SpawnedPawn))
 			{
-				if (const UHunterPawnData* PawnData = GetPawnDataForController(NewPlayer))
+				if (const ULyraPawnData* PawnData = GetPawnDataForController(NewPlayer))
 				{
 					PawnExtComp->SetPawnData(PawnData);
 				}
@@ -477,9 +477,9 @@ void AHunterGameMode::RequestPlayerRestartNextFrame(AController* Controller, boo
 	{
 		GetWorldTimerManager().SetTimerForNextTick(PC, &APlayerController::ServerRestartPlayer_Implementation);
 	}
-	else if (AHunterPlayerBotController* BotController = Cast<AHunterPlayerBotController>(Controller))
+	else if (ALyraPlayerBotController* BotController = Cast<ALyraPlayerBotController>(Controller))
 	{
-		GetWorldTimerManager().SetTimerForNextTick(BotController, &AHunterPlayerBotController::ServerRestartController);
+		GetWorldTimerManager().SetTimerForNextTick(BotController, &ALyraPlayerBotController::ServerRestartController);
 	}
 }
 

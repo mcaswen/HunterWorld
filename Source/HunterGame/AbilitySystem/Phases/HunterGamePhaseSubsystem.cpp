@@ -2,7 +2,7 @@
 
 #include "AbilitySystem/Phases/HunterGamePhaseSubsystem.h"
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Engine/World.h"
 #include "GameFramework/GameStateBase.h"
 #include "HunterGamePhaseAbility.h"
@@ -10,7 +10,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterGamePhaseSubsystem)
 
-class UHunterGameplayAbility;
+class ULyraGameplayAbility;
 class UObject;
 
 DEFINE_LOG_CATEGORY(LogHunterGamePhase);
@@ -50,7 +50,7 @@ bool UHunterGamePhaseSubsystem::DoesSupportWorldType(const EWorldType::Type Worl
 void UHunterGamePhaseSubsystem::StartPhase(TSubclassOf<UHunterGamePhaseAbility> PhaseAbility, FHunterGamePhaseDelegate PhaseEndedCallback)
 {
 	UWorld* World = GetWorld();
-	UHunterAbilitySystemComponent* GameState_ASC = World->GetGameState()->FindComponentByClass<UHunterAbilitySystemComponent>();
+	ULyraAbilitySystemComponent* GameState_ASC = World->GetGameState()->FindComponentByClass<ULyraAbilitySystemComponent>();
 	if (ensure(GameState_ASC))
 	{
 		FGameplayAbilitySpec PhaseSpec(PhaseAbility, 1, 0, this);
@@ -140,7 +140,7 @@ void UHunterGamePhaseSubsystem::OnBeginPhase(const UHunterGamePhaseAbility* Phas
 	UE_LOG(LogHunterGamePhase, Log, TEXT("Beginning Phase '%s' (%s)"), *IncomingPhaseTag.ToString(), *GetNameSafe(PhaseAbility));
 
 	const UWorld* World = GetWorld();
-	UHunterAbilitySystemComponent* GameState_ASC = World->GetGameState()->FindComponentByClass<UHunterAbilitySystemComponent>();
+	ULyraAbilitySystemComponent* GameState_ASC = World->GetGameState()->FindComponentByClass<ULyraAbilitySystemComponent>();
 	if (ensure(GameState_ASC))
 	{
 		TArray<FGameplayAbilitySpec*> ActivePhases;
@@ -170,7 +170,7 @@ void UHunterGamePhaseSubsystem::OnBeginPhase(const UHunterGamePhaseAbility* Phas
 				UE_LOG(LogHunterGamePhase, Log, TEXT("\tEnding Phase '%s' (%s)"), *ActivePhaseTag.ToString(), *GetNameSafe(ActivePhaseAbility));
 
 				FGameplayAbilitySpecHandle HandleToEnd = ActivePhase->Handle;
-				GameState_ASC->CancelAbilitiesByFunc([HandleToEnd](const UHunterGameplayAbility* HunterAbility, FGameplayAbilitySpecHandle Handle) {
+				GameState_ASC->CancelAbilitiesByFunc([HandleToEnd](const ULyraGameplayAbility* LyraAbility, FGameplayAbilitySpecHandle Handle) {
 					return Handle == HandleToEnd;
 				}, true);
 			}

@@ -6,7 +6,7 @@
 
 #if WITH_AUTOMATION_TESTS
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Character/HunterCharacter.h"
 #include "Components/MapTestSpawner.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -82,7 +82,7 @@ struct ShooterTestsActorBaseTest : public TTest<Derived, AsserterType>
 		Player = Cast<AHunterCharacter>(Spawner->FindFirstPlayerPawn());
 		ASSERT_THAT(IsNotNull(Player));
 
-		AbilitySystemComponent = Player->GetHunterAbilitySystemComponent();
+		AbilitySystemComponent = Player->GetLyraAbilitySystemComponent();
 		ASSERT_THAT(IsNotNull(AbilitySystemComponent));
 
 		GameplayCueCharacterSpawnTag = FGameplayTag::RequestGameplayTag(TEXT("GameplayCue.Character.Spawn"), false);
@@ -121,7 +121,7 @@ struct ShooterTestsActorBaseTest : public TTest<Derived, AsserterType>
 	TUniquePtr<FMapTestSpawner> Spawner{ nullptr };
 
 	/** Reference to the player's ability system component. */
-	UHunterAbilitySystemComponent* AbilitySystemComponent{ nullptr };
+	ULyraAbilitySystemComponent* AbilitySystemComponent{ nullptr };
 
 	/** Reference to the player's spawning gameplay effect. */
 	FGameplayTag GameplayCueCharacterSpawnTag;

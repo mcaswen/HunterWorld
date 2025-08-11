@@ -6,8 +6,8 @@
 
 #include "HunterReticleWidgetBase.generated.h"
 
-class UHunterInventoryItemInstance;
-class UHunterWeaponInstance;
+class ULyraInventoryItemInstance;
+class ULyraWeaponInstance;
 class UObject;
 struct FFrame;
 
@@ -23,7 +23,7 @@ public:
 	void OnWeaponInitialized();
 
 	UFUNCTION(BlueprintCallable)
-	void InitializeFromWeapon(UHunterWeaponInstance* InWeapon);
+	void InitializeFromWeapon(ULyraWeaponInstance* InWeapon);
 
 	/** Returns the current weapon's diametrical spread angle, in degrees */
 	UFUNCTION(BlueprintCallable, BlueprintPure)
@@ -42,8 +42,8 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UHunterWeaponInstance> WeaponInstance;
+	TObjectPtr<ULyraWeaponInstance> WeaponInstance;
 
 	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UHunterInventoryItemInstance> InventoryInstance;
+	TObjectPtr<ULyraInventoryItemInstance> InventoryInstance;
 };

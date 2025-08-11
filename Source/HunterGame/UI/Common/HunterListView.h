@@ -10,7 +10,7 @@
 
 class UUserWidget;
 class ULocalPlayer;
-class UHunterWidgetFactory;
+class ULyraWidgetFactory;
 
 UCLASS(MinimalAPI, meta = (DisableNativeTick))
 class UHunterListView : public UCommonListView
@@ -30,7 +30,7 @@ protected:
 
 protected:
 	UPROPERTY(EditAnywhere, Instanced, Category="Entry Creation")
-	TArray<TObjectPtr<UHunterWidgetFactory>> FactoryRules;
+	TArray<TObjectPtr<ULyraWidgetFactory>> FactoryRules;
 };
 
 #undef UE_API

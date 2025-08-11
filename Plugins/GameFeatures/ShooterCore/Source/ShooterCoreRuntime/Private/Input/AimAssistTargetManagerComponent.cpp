@@ -9,10 +9,10 @@
 #include "GameFramework/InputSettings.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Character/HunterHealthComponent.h"
+#include "Character/LyraHealthComponent.h"
 #include "Input/AimAssistInputModifier.h"
 #include "Player/HunterPlayerState.h"
-#include "Character/HunterHealthComponent.h"
+#include "Character/LyraHealthComponent.h"
 #include "Input/IAimAssistTargetInterface.h"
 #include "ShooterCoreRuntimeSettings.h"
 
@@ -321,7 +321,7 @@ bool UAimAssistTargetManagerComponent::DoesTargetPassFilter(const FAimAssistOwne
 		// Exclude dead or dying characters
 		if (Filter.bExcludeDeadOrDying)
 		{
-			if (const UHunterHealthComponent* HealthComponent = UHunterHealthComponent::FindHealthComponent(TargetCharacter))
+			if (const ULyraHealthComponent* HealthComponent = ULyraHealthComponent::FindHealthComponent(TargetCharacter))
 			{
 				if (HealthComponent->IsDeadOrDying())
 				{

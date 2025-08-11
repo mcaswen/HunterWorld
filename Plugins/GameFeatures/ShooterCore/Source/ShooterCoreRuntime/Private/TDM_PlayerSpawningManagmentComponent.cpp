@@ -5,7 +5,7 @@
 #include "Engine/World.h"
 #include "GameFramework/PlayerState.h"
 #include "GameModes/HunterGameState.h"
-#include "Player/HunterPlayerStart.h"
+#include "Player/LyraPlayerStart.h"
 #include "Teams/HunterTeamSubsystem.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(TDM_PlayerSpawningManagmentComponent)
@@ -17,7 +17,7 @@ UTDM_PlayerSpawningManagmentComponent::UTDM_PlayerSpawningManagmentComponent(con
 {
 }
 
-AActor* UTDM_PlayerSpawningManagmentComponent::OnChoosePlayerStart(AController* Player, TArray<AHunterPlayerStart*>& PlayerStarts)
+AActor* UTDM_PlayerSpawningManagmentComponent::OnChoosePlayerStart(AController* Player, TArray<ALyraPlayerStart*>& PlayerStarts)
 {
 	UHunterTeamSubsystem* TeamSubsystem = GetWorld()->GetSubsystem<UHunterTeamSubsystem>();
 	if (!ensure(TeamSubsystem))
@@ -35,9 +35,9 @@ AActor* UTDM_PlayerSpawningManagmentComponent::OnChoosePlayerStart(AController* 
 
 	AHunterGameState* GameState = GetGameStateChecked<AHunterGameState>();
 
-	AHunterPlayerStart* BestPlayerStart = nullptr;
+	ALyraPlayerStart* BestPlayerStart = nullptr;
 	double MaxDistance = 0;
-	AHunterPlayerStart* FallbackPlayerStart = nullptr;
+	ALyraPlayerStart* FallbackPlayerStart = nullptr;
 	double FallbackMaxDistance = 0;
 
 	for (APlayerState* PS : GameState->PlayerArray)
@@ -53,7 +53,7 @@ AActor* UTDM_PlayerSpawningManagmentComponent::OnChoosePlayerStart(AController* 
 		// If the other player isn't on the same team, lets find the furthest spawn from them.
 		if (TeamId != PlayerTeamId)
 		{
-			for (AHunterPlayerStart* PlayerStart : PlayerStarts)
+			for (ALyraPlayerStart* PlayerStart : PlayerStarts)
 			{
 				if (APawn* Pawn = PS->GetPawn())
 				{
@@ -67,7 +67,7 @@ AActor* UTDM_PlayerSpawningManagmentComponent::OnChoosePlayerStart(AController* 
 							FallbackMaxDistance = Distance;
 						}
 					}
-					else if (PlayerStart->GetLocationOccupancy(Player) < EHunterPlayerStartLocationOccupancy::Full)
+					else if (PlayerStart->GetLocationOccupancy(Player) < ELyraPlayerStartLocationOccupancy::Full)
 					{
 						if (BestPlayerStart == nullptr || Distance > MaxDistance)
 						{

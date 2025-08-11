@@ -3,7 +3,7 @@
 #include "HunterBotCheats.h"
 #include "Engine/World.h"
 #include "GameFramework/CheatManagerDefines.h"
-#include "GameModes/HunterBotCreationComponent.h"
+#include "GameModes/LyraBotCreationComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterBotCheats)
 
@@ -27,7 +27,7 @@ UHunterBotCheats::UHunterBotCheats()
 void UHunterBotCheats::AddPlayerBot()
 {
 #if WITH_SERVER_CODE && UE_WITH_CHEAT_MANAGER
-	if (UHunterBotCreationComponent* BotComponent = GetBotComponent())
+	if (ULyraBotCreationComponent* BotComponent = GetBotComponent())
 	{
 		BotComponent->Cheat_AddBot();
 	}
@@ -37,20 +37,20 @@ void UHunterBotCheats::AddPlayerBot()
 void UHunterBotCheats::RemovePlayerBot()
 {
 #if WITH_SERVER_CODE && UE_WITH_CHEAT_MANAGER
-	if (UHunterBotCreationComponent* BotComponent = GetBotComponent())
+	if (ULyraBotCreationComponent* BotComponent = GetBotComponent())
 	{
 		BotComponent->Cheat_RemoveBot();
 	}
 #endif	
 }
 
-UHunterBotCreationComponent* UHunterBotCheats::GetBotComponent() const
+ULyraBotCreationComponent* UHunterBotCheats::GetBotComponent() const
 {
 	if (UWorld* World = GetWorld())
 	{
 		if (AGameStateBase* GameState = World->GetGameState())
 		{
-			return GameState->FindComponentByClass<UHunterBotCreationComponent>();
+			return GameState->FindComponentByClass<ULyraBotCreationComponent>();
 		}
 	}
 

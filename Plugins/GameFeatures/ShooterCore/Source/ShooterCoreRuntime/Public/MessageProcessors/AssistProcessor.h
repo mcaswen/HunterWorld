@@ -9,7 +9,7 @@
 class APlayerState;
 class UObject;
 struct FGameplayTag;
-struct FHunterVerbMessage;
+struct FLyraVerbMessage;
 template <typename T> struct TObjectPtr;
 
 // Tracks the damage done to a player by other players
@@ -33,8 +33,8 @@ public:
 	virtual void StartListening() override;
 
 private:
-	void OnDamageMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload);
-	void OnEliminationMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload);
+	void OnDamageMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload);
+	void OnEliminationMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload);
 
 private:
 	// Map of player to damage dealt to them

@@ -4,7 +4,7 @@
 #include "GameFramework/PlayerState.h"
 #include "EngineUtils.h"
 #include "Engine/PlayerStartPIE.h"
-#include "HunterPlayerStart.h"
+#include "LyraPlayerStart.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterPlayerSpawningManagerComponent)
 
@@ -32,9 +32,9 @@ void UHunterPlayerSpawningManagerComponent::InitializeComponent()
 	UWorld* World = GetWorld();
 	World->AddOnActorSpawnedHandler(FOnActorSpawned::FDelegate::CreateUObject(this, &ThisClass::HandleOnActorSpawned));
 
-	for (TActorIterator<AHunterPlayerStart> It(World); It; ++It)
+	for (TActorIterator<ALyraPlayerStart> It(World); It; ++It)
 	{
-		if (AHunterPlayerStart* PlayerStart = *It)
+		if (ALyraPlayerStart* PlayerStart = *It)
 		{
 			CachedPlayerStarts.Add(PlayerStart);
 		}
@@ -47,7 +47,7 @@ void UHunterPlayerSpawningManagerComponent::OnLevelAdded(ULevel* InLevel, UWorld
 	{
 		for (AActor* Actor : InLevel->Actors)
 		{
-			if (AHunterPlayerStart* PlayerStart = Cast<AHunterPlayerStart>(Actor))
+			if (ALyraPlayerStart* PlayerStart = Cast<ALyraPlayerStart>(Actor))
 			{
 				ensure(!CachedPlayerStarts.Contains(PlayerStart));
 				CachedPlayerStarts.Add(PlayerStart);
@@ -58,7 +58,7 @@ void UHunterPlayerSpawningManagerComponent::OnLevelAdded(ULevel* InLevel, UWorld
 
 void UHunterPlayerSpawningManagerComponent::HandleOnActorSpawned(AActor* SpawnedActor)
 {
-	if (AHunterPlayerStart* PlayerStart = Cast<AHunterPlayerStart>(SpawnedActor))
+	if (ALyraPlayerStart* PlayerStart = Cast<ALyraPlayerStart>(SpawnedActor))
 	{
 		CachedPlayerStarts.Add(PlayerStart);
 	}
@@ -79,10 +79,10 @@ AActor* UHunterPlayerSpawningManagerComponent::ChoosePlayerStart(AController* Pl
 		}
 #endif
 
-		TArray<AHunterPlayerStart*> StarterPoints;
+		TArray<ALyraPlayerStart*> StarterPoints;
 		for (auto StartIt = CachedPlayerStarts.CreateIterator(); StartIt; ++StartIt)
 		{
-			if (AHunterPlayerStart* Start = (*StartIt).Get())
+			if (ALyraPlayerStart* Start = (*StartIt).Get())
 			{
 				StarterPoints.Add(Start);
 			}
@@ -113,7 +113,7 @@ AActor* UHunterPlayerSpawningManagerComponent::ChoosePlayerStart(AController* Pl
 			PlayerStart = GetFirstRandomUnoccupiedPlayerStart(Player, StarterPoints);
 		}
 
-		if (AHunterPlayerStart* HunterStart = Cast<AHunterPlayerStart>(PlayerStart))
+		if (ALyraPlayerStart* HunterStart = Cast<ALyraPlayerStart>(PlayerStart))
 		{
 			HunterStart->TryClaim(Player);
 		}
@@ -172,23 +172,23 @@ void UHunterPlayerSpawningManagerComponent::TickComponent(float DeltaTime, enum 
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-APlayerStart* UHunterPlayerSpawningManagerComponent::GetFirstRandomUnoccupiedPlayerStart(AController* Controller, const TArray<AHunterPlayerStart*>& StartPoints) const
+APlayerStart* UHunterPlayerSpawningManagerComponent::GetFirstRandomUnoccupiedPlayerStart(AController* Controller, const TArray<ALyraPlayerStart*>& StartPoints) const
 {
 	if (Controller)
 	{
-		TArray<AHunterPlayerStart*> UnOccupiedStartPoints;
-		TArray<AHunterPlayerStart*> OccupiedStartPoints;
+		TArray<ALyraPlayerStart*> UnOccupiedStartPoints;
+		TArray<ALyraPlayerStart*> OccupiedStartPoints;
 
-		for (AHunterPlayerStart* StartPoint : StartPoints)
+		for (ALyraPlayerStart* StartPoint : StartPoints)
 		{
-			EHunterPlayerStartLocationOccupancy State = StartPoint->GetLocationOccupancy(Controller);
+			ELyraPlayerStartLocationOccupancy State = StartPoint->GetLocationOccupancy(Controller);
 
 			switch (State)
 			{
-				case EHunterPlayerStartLocationOccupancy::Empty:
+				case ELyraPlayerStartLocationOccupancy::Empty:
 					UnOccupiedStartPoints.Add(StartPoint);
 					break;
-				case EHunterPlayerStartLocationOccupancy::Partial:
+				case ELyraPlayerStartLocationOccupancy::Partial:
 					OccupiedStartPoints.Add(StartPoint);
 					break;
 

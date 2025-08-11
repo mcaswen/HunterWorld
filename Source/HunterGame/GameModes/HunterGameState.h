@@ -9,11 +9,11 @@
 
 #define UE_API HUNTERGAME_API
 
-struct FHunterVerbMessage;
+struct FLyraVerbMessage;
 
 class APlayerState;
 class UAbilitySystemComponent;
-class UHunterAbilitySystemComponent;
+class ULyraAbilitySystemComponent;
 class UHunterExperienceManagerComponent;
 class UObject;
 struct FFrame;
@@ -51,17 +51,17 @@ public:
 
 	// Gets the ability system component used for game wide things
 	UFUNCTION(BlueprintCallable, Category = "Hunter|GameState")
-	UHunterAbilitySystemComponent* GetHunterAbilitySystemComponent() const { return AbilitySystemComponent; }
+	ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const { return AbilitySystemComponent; }
 
 	// Send a message that all clients will (probably) get
 	// (use only for client notifications like eliminations, server join messages, etc... that can handle being lost)
 	UFUNCTION(NetMulticast, Unreliable, BlueprintCallable, Category = "Hunter|GameState")
-	UE_API void MulticastMessageToClients(const FHunterVerbMessage Message);
+	UE_API void MulticastMessageToClients(const FLyraVerbMessage Message);
 
 	// Send a message that all clients will be guaranteed to get
 	// (use only for client notifications that cannot handle being lost)
 	UFUNCTION(NetMulticast, Reliable, BlueprintCallable, Category = "Hunter|GameState")
-	UE_API void MulticastReliableMessageToClients(const FHunterVerbMessage Message);
+	UE_API void MulticastReliableMessageToClients(const FLyraVerbMessage Message);
 
 	// Gets the server's FPS, replicated to clients
 	UE_API float GetServerFPS() const;
@@ -83,7 +83,7 @@ private:
 
 	// The ability system component subobject for game-wide things (primarily gameplay cues)
 	UPROPERTY(VisibleAnywhere, Category = "Hunter|GameState")
-	TObjectPtr<UHunterAbilitySystemComponent> AbilitySystemComponent;
+	TObjectPtr<ULyraAbilitySystemComponent> AbilitySystemComponent;
 
 protected:
 	UPROPERTY(Replicated)

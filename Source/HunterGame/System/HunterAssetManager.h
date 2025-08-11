@@ -12,7 +12,7 @@
 class UPrimaryDataAsset;
 
 class ULyraGameData;
-class UHunterPawnData;
+class ULyraPawnData;
 
 struct FHunterBundles
 {
@@ -51,7 +51,7 @@ public:
 	static UE_API void DumpLoadedAssets();
 
 	UE_API const ULyraGameData& GetGameData();
-	UE_API const UHunterPawnData* GetDefaultPawnData() const;
+	UE_API const ULyraPawnData* GetDefaultPawnData() const;
 
 protected:
 	template <typename GameDataClass>
@@ -94,7 +94,7 @@ protected:
 
 	// Pawn data used when spawning player pawns if there isn't one set on the player state.
 	UPROPERTY(Config)
-	TSoftObjectPtr<UHunterPawnData> DefaultPawnData;
+	TSoftObjectPtr<ULyraPawnData> DefaultPawnData;
 
 private:
 	// Flushes the StartupJobs array. Processes all startup work.

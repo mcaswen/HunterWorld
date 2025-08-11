@@ -4,10 +4,10 @@
 #include "AbilitySystem/Attributes/HunterAttributeSet.h"
 #include "HunterGameplayTags.h"
 #include "Net/UnrealNetwork.h"
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Engine/World.h"
 #include "GameplayEffectExtension.h"
-#include "Messages/HunterVerbMessage.h"
+#include "Messages/LyraVerbMessage.h"
 #include "GameFramework/GameplayMessageSubsystem.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterHealthSet)
@@ -130,7 +130,7 @@ void UHunterHealthSet::PostGameplayEffectExecute(const FGameplayEffectModCallbac
 		// Send a standardized verb message that other systems can observe
 		if (Data.EvaluatedData.Magnitude > 0.0f)
 		{
-			FHunterVerbMessage Message;
+			FLyraVerbMessage Message;
 			Message.Verb = TAG_Hunter_Damage_Message;
 			Message.Instigator = Data.EffectSpec.GetEffectContext().GetEffectCauser();
 			Message.InstigatorTags = *Data.EffectSpec.CapturedSourceTags.GetAggregatedTags();
@@ -205,7 +205,7 @@ void UHunterHealthSet::PostAttributeChange(const FGameplayAttribute& Attribute, 
 		// Make sure current health is not greater than the new max health.
 		if (GetHealth() > NewValue)
 		{
-			UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent();
+			ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent();
 			check(HunterASC);
 
 			HunterASC->ApplyModToAttribute(GetHealthAttribute(), EGameplayModOp::Override, NewValue);

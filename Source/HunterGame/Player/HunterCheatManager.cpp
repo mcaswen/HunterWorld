@@ -11,9 +11,9 @@
 #include "System/HunterAssetManager.h"
 #include "System/LyraGameData.h"
 #include "HunterGameplayTags.h"
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
-#include "Character/HunterHealthComponent.h"
+#include "Character/LyraHealthComponent.h"
 #include "Character/HunterPawnExtensionComponent.h"
 #include "System/HunterSystemStatics.h"
 #include "Development/HunterDeveloperSettings.h"
@@ -231,7 +231,7 @@ void UHunterCheatManager::CycleAbilitySystemDebug()
 
 void UHunterCheatManager::CancelActivatedAbilities()
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
 	{
 		const bool bReplicateCancelAbility = true;
 		HunterASC->CancelInputActivatedAbilities(bReplicateCancelAbility);
@@ -243,7 +243,7 @@ void UHunterCheatManager::AddTagToSelf(FString TagName)
 	FGameplayTag Tag = HunterGameplayTags::FindTagByString(TagName, true);
 	if (Tag.IsValid())
 	{
-		if (UHunterAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
+		if (ULyraAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
 		{
 			HunterASC->AddDynamicTagGameplayEffect(Tag);
 		}
@@ -259,7 +259,7 @@ void UHunterCheatManager::RemoveTagFromSelf(FString TagName)
 	FGameplayTag Tag = HunterGameplayTags::FindTagByString(TagName, true);
 	if (Tag.IsValid())
 	{
-		if (UHunterAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
+		if (ULyraAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
 		{
 			HunterASC->RemoveDynamicTagGameplayEffect(Tag);
 		}
@@ -272,7 +272,7 @@ void UHunterCheatManager::RemoveTagFromSelf(FString TagName)
 
 void UHunterCheatManager::DamageSelf(float DamageAmount)
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
 	{
 		ApplySetByCallerDamage(HunterASC, DamageAmount);
 	}
@@ -292,14 +292,14 @@ void UHunterCheatManager::DamageTarget(float DamageAmount)
 		FHitResult TargetHitResult;
 		AActor* TargetActor = GetTarget(HunterPC, TargetHitResult);
 
-		if (UHunterAbilitySystemComponent* HunterTargetASC = Cast<UHunterAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor)))
+		if (ULyraAbilitySystemComponent* HunterTargetASC = Cast<ULyraAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor)))
 		{
 			ApplySetByCallerDamage(HunterTargetASC, DamageAmount);
 		}
 	}
 }
 
-void UHunterCheatManager::ApplySetByCallerDamage(UHunterAbilitySystemComponent* HunterASC, float DamageAmount)
+void UHunterCheatManager::ApplySetByCallerDamage(ULyraAbilitySystemComponent* HunterASC, float DamageAmount)
 {
 	check(HunterASC);
 
@@ -315,7 +315,7 @@ void UHunterCheatManager::ApplySetByCallerDamage(UHunterAbilitySystemComponent* 
 
 void UHunterCheatManager::HealSelf(float HealAmount)
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
 	{
 		ApplySetByCallerHeal(HunterASC, HealAmount);
 	}
@@ -328,14 +328,14 @@ void UHunterCheatManager::HealTarget(float HealAmount)
 		FHitResult TargetHitResult;
 		AActor* TargetActor = GetTarget(HunterPC, TargetHitResult);
 
-		if (UHunterAbilitySystemComponent* HunterTargetASC = Cast<UHunterAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor)))
+		if (ULyraAbilitySystemComponent* HunterTargetASC = Cast<ULyraAbilitySystemComponent>(UAbilitySystemGlobals::GetAbilitySystemComponentFromActor(TargetActor)))
 		{
 			ApplySetByCallerHeal(HunterTargetASC, HealAmount);
 		}
 	}
 }
 
-void UHunterCheatManager::ApplySetByCallerHeal(UHunterAbilitySystemComponent* HunterASC, float HealAmount)
+void UHunterCheatManager::ApplySetByCallerHeal(ULyraAbilitySystemComponent* HunterASC, float HealAmount)
 {
 	check(HunterASC);
 
@@ -349,11 +349,11 @@ void UHunterCheatManager::ApplySetByCallerHeal(UHunterAbilitySystemComponent* Hu
 	}
 }
 
-UHunterAbilitySystemComponent* UHunterCheatManager::GetPlayerAbilitySystemComponent() const
+ULyraAbilitySystemComponent* UHunterCheatManager::GetPlayerAbilitySystemComponent() const
 {
 	if (AHunterPlayerController* HunterPC = Cast<AHunterPlayerController>(GetOuterAPlayerController()))
 	{
-		return HunterPC->GetHunterAbilitySystemComponent();
+		return HunterPC->GetLyraAbilitySystemComponent();
 	}
 	return nullptr;
 }
@@ -366,7 +366,7 @@ void UHunterCheatManager::DamageSelfDestruct()
 		{
 			if (PawnExtComp->HasReachedInitState(HunterGameplayTags::InitState_GameplayReady))
 			{
-				if (UHunterHealthComponent* HealthComponent = UHunterHealthComponent::FindHealthComponent(HunterPC->GetPawn()))
+				if (ULyraHealthComponent* HealthComponent = ULyraHealthComponent::FindHealthComponent(HunterPC->GetPawn()))
 				{
 					HealthComponent->DamageSelfDestruct();
 				}
@@ -386,7 +386,7 @@ void UHunterCheatManager::God()
 			return;
 		}
 
-		if (UHunterAbilitySystemComponent* HunterASC = HunterPC->GetHunterAbilitySystemComponent())
+		if (ULyraAbilitySystemComponent* HunterASC = HunterPC->GetLyraAbilitySystemComponent())
 		{
 			const FGameplayTag Tag = HunterGameplayTags::Cheat_GodMode;
 			const bool bHasTag = HunterASC->HasMatchingGameplayTag(Tag);
@@ -405,7 +405,7 @@ void UHunterCheatManager::God()
 
 void UHunterCheatManager::UnlimitedHealth(int32 Enabled)
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetPlayerAbilitySystemComponent())
 	{
 		const FGameplayTag Tag = HunterGameplayTags::Cheat_UnlimitedHealth;
 		const bool bHasTag = HunterASC->HasMatchingGameplayTag(Tag);

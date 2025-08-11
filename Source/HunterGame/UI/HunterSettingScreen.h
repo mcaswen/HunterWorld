@@ -8,7 +8,7 @@
 #include "HunterSettingScreen.generated.h"
 
 class UGameSettingRegistry;
-class UHunterTabListWidgetBase;
+class ULyraTabListWidgetBase;
 class UObject;
 
 UCLASS(Abstract, meta = (Category = "Settings", DisableNativeTick))
@@ -30,7 +30,7 @@ protected:
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = Input, meta = (BindWidget, OptionalWidget = true, AllowPrivateAccess = true))
-	TObjectPtr<UHunterTabListWidgetBase> TopSettingsTabs;
+	TObjectPtr<ULyraTabListWidgetBase> TopSettingsTabs;
 	
 	UPROPERTY(EditDefaultsOnly)
 	FDataTableRowHandle BackInputActionData;

@@ -3,7 +3,7 @@
 #include "MessageProcessors/ElimStreakProcessor.h"
 
 #include "GameFramework/PlayerState.h"
-#include "Messages/HunterVerbMessage.h"
+#include "Messages/LyraVerbMessage.h"
 #include "NativeGameplayTags.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(ElimStreakProcessor)
@@ -19,7 +19,7 @@ void UElimStreakProcessor::StartListening()
 	AddListenerHandle(MessageSubsystem.RegisterListener(ElimStreak::TAG_Hunter_Elimination_Message, this, &ThisClass::OnEliminationMessage));
 }
 
-void UElimStreakProcessor::OnEliminationMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload)
+void UElimStreakProcessor::OnEliminationMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload)
 {
 	// Track elimination streaks for the attacker (except for self-eliminations)
 	if (Payload.Instigator != Payload.Target)
@@ -31,7 +31,7 @@ void UElimStreakProcessor::OnEliminationMessage(FGameplayTag Channel, const FHun
 
 			if (FGameplayTag* pTag = ElimStreakTags.Find(StreakCount))
 			{
-				FHunterVerbMessage ElimStreakMessage;
+				FLyraVerbMessage ElimStreakMessage;
 				ElimStreakMessage.Verb = *pTag;
 				ElimStreakMessage.Instigator = InstigatorPS;
 				ElimStreakMessage.InstigatorTags = Payload.InstigatorTags;

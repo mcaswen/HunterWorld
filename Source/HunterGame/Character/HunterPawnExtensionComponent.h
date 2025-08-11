@@ -12,8 +12,8 @@
 namespace EEndPlayReason { enum Type : int; }
 
 class UGameFrameworkComponentManager;
-class UHunterAbilitySystemComponent;
-class UHunterPawnData;
+class ULyraAbilitySystemComponent;
+class ULyraPawnData;
 class UObject;
 struct FActorInitStateChangedParams;
 struct FFrame;
@@ -52,14 +52,14 @@ public:
 	const T* GetPawnData() const { return Cast<T>(PawnData); }
 
 	/** Sets the current pawn data */
-	UE_API void SetPawnData(const UHunterPawnData* InPawnData);
+	UE_API void SetPawnData(const ULyraPawnData* InPawnData);
 
 	/** Gets the current ability system component, which may be owned by a different actor */
 	UFUNCTION(BlueprintPure, Category = "Hunter|Pawn")
-	UHunterAbilitySystemComponent* GetHunterAbilitySystemComponent() const { return AbilitySystemComponent; }
+	ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const { return AbilitySystemComponent; }
 
 	/** Should be called by the owning pawn to become the avatar of the ability system. */
-	UE_API void InitializeAbilitySystem(UHunterAbilitySystemComponent* InASC, AActor* InOwnerActor);
+	UE_API void InitializeAbilitySystem(ULyraAbilitySystemComponent* InASC, AActor* InOwnerActor);
 
 	/** Should be called by the owning pawn to remove itself as the avatar of the ability system. */
 	UE_API void UninitializeAbilitySystem();
@@ -96,11 +96,11 @@ protected:
 
 	/** Pawn data used to create the pawn. Specified from a spawn function or on a placed instance. */
 	UPROPERTY(EditInstanceOnly, ReplicatedUsing = OnRep_PawnData, Category = "Hunter|Pawn")
-	TObjectPtr<const UHunterPawnData> PawnData;
+	TObjectPtr<const ULyraPawnData> PawnData;
 
 	/** Pointer to the ability system component that is cached for convenience. */
 	UPROPERTY(Transient)
-	TObjectPtr<UHunterAbilitySystemComponent> AbilitySystemComponent;
+	TObjectPtr<ULyraAbilitySystemComponent> AbilitySystemComponent;
 };
 
 #undef UE_API

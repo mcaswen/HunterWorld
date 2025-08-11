@@ -2,11 +2,11 @@
 
 #include "HunterGameState.h"
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Async/TaskGraphInterfaces.h"
 #include "GameFramework/GameplayMessageSubsystem.h"
 #include "GameModes/HunterExperienceManagerComponent.h"
-#include "Messages/HunterVerbMessage.h"
+#include "Messages/LyraVerbMessage.h"
 #include "Player/HunterPlayerState.h"
 #include "HunterLogChannels.h"
 #include "Net/UnrealNetwork.h"
@@ -25,7 +25,7 @@ AHunterGameState::AHunterGameState(const FObjectInitializer& ObjectInitializer)
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
-	AbilitySystemComponent = ObjectInitializer.CreateDefaultSubobject<UHunterAbilitySystemComponent>(this, TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent = ObjectInitializer.CreateDefaultSubobject<ULyraAbilitySystemComponent>(this, TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
@@ -100,7 +100,7 @@ void AHunterGameState::Tick(float DeltaSeconds)
 	}
 }
 
-void AHunterGameState::MulticastMessageToClients_Implementation(const FHunterVerbMessage Message)
+void AHunterGameState::MulticastMessageToClients_Implementation(const FLyraVerbMessage Message)
 {
 	if (GetNetMode() == NM_Client)
 	{
@@ -108,7 +108,7 @@ void AHunterGameState::MulticastMessageToClients_Implementation(const FHunterVer
 	}
 }
 
-void AHunterGameState::MulticastReliableMessageToClients_Implementation(const FHunterVerbMessage Message)
+void AHunterGameState::MulticastReliableMessageToClients_Implementation(const FLyraVerbMessage Message)
 {
 	MulticastMessageToClients_Implementation(Message);
 }

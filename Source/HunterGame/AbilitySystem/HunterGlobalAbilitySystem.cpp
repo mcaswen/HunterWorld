@@ -2,11 +2,11 @@
 
 #include "HunterGlobalAbilitySystem.h"
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterGlobalAbilitySystem)
 
-void FGlobalAppliedAbilityList::AddToASC(TSubclassOf<UGameplayAbility> Ability, UHunterAbilitySystemComponent* ASC)
+void FGlobalAppliedAbilityList::AddToASC(TSubclassOf<UGameplayAbility> Ability, ULyraAbilitySystemComponent* ASC)
 {
 	if (FGameplayAbilitySpecHandle* SpecHandle = Handles.Find(ASC))
 	{
@@ -19,7 +19,7 @@ void FGlobalAppliedAbilityList::AddToASC(TSubclassOf<UGameplayAbility> Ability, 
 	Handles.Add(ASC, AbilitySpecHandle);
 }
 
-void FGlobalAppliedAbilityList::RemoveFromASC(UHunterAbilitySystemComponent* ASC)
+void FGlobalAppliedAbilityList::RemoveFromASC(ULyraAbilitySystemComponent* ASC)
 {
 	if (FGameplayAbilitySpecHandle* SpecHandle = Handles.Find(ASC))
 	{
@@ -42,7 +42,7 @@ void FGlobalAppliedAbilityList::RemoveFromAll()
 
 
 
-void FGlobalAppliedEffectList::AddToASC(TSubclassOf<UGameplayEffect> Effect, UHunterAbilitySystemComponent* ASC)
+void FGlobalAppliedEffectList::AddToASC(TSubclassOf<UGameplayEffect> Effect, ULyraAbilitySystemComponent* ASC)
 {
 	if (FActiveGameplayEffectHandle* EffectHandle = Handles.Find(ASC))
 	{
@@ -54,7 +54,7 @@ void FGlobalAppliedEffectList::AddToASC(TSubclassOf<UGameplayEffect> Effect, UHu
 	Handles.Add(ASC, GameplayEffectHandle);
 }
 
-void FGlobalAppliedEffectList::RemoveFromASC(UHunterAbilitySystemComponent* ASC)
+void FGlobalAppliedEffectList::RemoveFromASC(ULyraAbilitySystemComponent* ASC)
 {
 	if (FActiveGameplayEffectHandle* EffectHandle = Handles.Find(ASC))
 	{
@@ -84,7 +84,7 @@ void UHunterGlobalAbilitySystem::ApplyAbilityToAll(TSubclassOf<UGameplayAbility>
 	if ((Ability.Get() != nullptr) && (!AppliedAbilities.Contains(Ability)))
 	{
 		FGlobalAppliedAbilityList& Entry = AppliedAbilities.Add(Ability);		
-		for (UHunterAbilitySystemComponent* ASC : RegisteredASCs)
+		for (ULyraAbilitySystemComponent* ASC : RegisteredASCs)
 		{
 			Entry.AddToASC(Ability, ASC);
 		}
@@ -96,7 +96,7 @@ void UHunterGlobalAbilitySystem::ApplyEffectToAll(TSubclassOf<UGameplayEffect> E
 	if ((Effect.Get() != nullptr) && (!AppliedEffects.Contains(Effect)))
 	{
 		FGlobalAppliedEffectList& Entry = AppliedEffects.Add(Effect);
-		for (UHunterAbilitySystemComponent* ASC : RegisteredASCs)
+		for (ULyraAbilitySystemComponent* ASC : RegisteredASCs)
 		{
 			Entry.AddToASC(Effect, ASC);
 		}
@@ -123,7 +123,7 @@ void UHunterGlobalAbilitySystem::RemoveEffectFromAll(TSubclassOf<UGameplayEffect
 	}
 }
 
-void UHunterGlobalAbilitySystem::RegisterASC(UHunterAbilitySystemComponent* ASC)
+void UHunterGlobalAbilitySystem::RegisterASC(ULyraAbilitySystemComponent* ASC)
 {
 	check(ASC);
 
@@ -139,7 +139,7 @@ void UHunterGlobalAbilitySystem::RegisterASC(UHunterAbilitySystemComponent* ASC)
 	RegisteredASCs.AddUnique(ASC);
 }
 
-void UHunterGlobalAbilitySystem::UnregisterASC(UHunterAbilitySystemComponent* ASC)
+void UHunterGlobalAbilitySystem::UnregisterASC(ULyraAbilitySystemComponent* ASC)
 {
 	check(ASC);
 	for (auto& Entry : AppliedAbilities)

@@ -15,7 +15,7 @@ class APawn;
 class APlayerController;
 class UClass;
 class ULyraExperienceDefinition;
-class UHunterPawnData;
+class ULyraPawnData;
 class UObject;
 struct FFrame;
 struct FPrimaryAssetId;
@@ -43,7 +43,7 @@ public:
 	UE_API AHunterGameMode(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
 	UFUNCTION(BlueprintCallable, Category = "Hunter|Pawn")
-	UE_API const UHunterPawnData* GetPawnDataForController(const AController* InController) const;
+	UE_API const ULyraPawnData* GetPawnDataForController(const AController* InController) const;
 
 	//~AGameModeBase interface
 	UE_API virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;

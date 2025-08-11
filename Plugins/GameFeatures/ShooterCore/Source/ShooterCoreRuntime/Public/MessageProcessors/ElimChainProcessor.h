@@ -9,7 +9,7 @@
 class APlayerState;
 class UObject;
 struct FGameplayTag;
-struct FHunterVerbMessage;
+struct FLyraVerbMessage;
 template <typename T> struct TObjectPtr;
 
 USTRUCT()
@@ -40,7 +40,7 @@ protected:
 	TMap<int32, FGameplayTag> ElimChainTags;
 
 private:
-	void OnEliminationMessage(FGameplayTag Channel, const FHunterVerbMessage& Payload);
+	void OnEliminationMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload);
 
 private:
 	UPROPERTY(Transient)

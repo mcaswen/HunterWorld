@@ -18,7 +18,7 @@ class APawn;
 class APlayerState;
 class FPrimitiveComponentId;
 class IInputInterface;
-class UHunterAbilitySystemComponent;
+class ULyraAbilitySystemComponent;
 class UHunterSettingsShared;
 class UObject;
 class UPlayer;
@@ -42,7 +42,7 @@ public:
 	UE_API AHunterPlayerState* GetHunterPlayerState() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Hunter|PlayerController")
-	UE_API UHunterAbilitySystemComponent* GetHunterAbilitySystemComponent() const;
+	UE_API ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Hunter|PlayerController")
 	UE_API AHunterHUD* GetHunterHUD() const;

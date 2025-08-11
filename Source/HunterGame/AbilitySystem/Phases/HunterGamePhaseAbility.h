@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "AbilitySystem/Abilities/HunterGameplayAbility.h"
+#include "AbilitySystem/Abilities/LyraGameplayAbility.h"
 #include "HunterGamePhaseAbility.generated.h"
 
 /**
@@ -11,7 +11,7 @@
  * The base gameplay ability for any ability that is used to change the active game phase.
  */
 UCLASS(Abstract, HideCategories = Input)
-class UHunterGamePhaseAbility : public UHunterGameplayAbility
+class UHunterGamePhaseAbility : public ULyraGameplayAbility
 {
 	GENERATED_BODY()
 

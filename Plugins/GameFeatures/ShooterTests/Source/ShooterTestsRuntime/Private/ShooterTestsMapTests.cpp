@@ -4,10 +4,10 @@
 
 #if WITH_AUTOMATION_TESTS
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "AbilitySystem/Attributes/HunterHealthSet.h"
 #include "Character/HunterCharacter.h"
-#include "Character/HunterHealthComponent.h"
+#include "Character/LyraHealthComponent.h"
 #include "Components/MapTestSpawner.h"
 #include "Helpers/CQTestAssetHelper.h"
 #include "HunterGameplayTags.h"
@@ -36,7 +36,7 @@ TEST_CLASS_WITH_FLAGS(AbilitySpawnerMapTest, "Project.Functional Tests.ShooterTe
 
 	AHunterCharacter* Player{ nullptr };
 	AActor* GameplayEffectPad{ nullptr };
-	UHunterAbilitySystemComponent* AbilitySystemComponent{ nullptr };
+	ULyraAbilitySystemComponent* AbilitySystemComponent{ nullptr };
 	const UHunterHealthSet* HealthSet{ nullptr };
 
 	// Fetches the GameplayEffect which will trigger and apply the damage specified to the player
@@ -90,7 +90,7 @@ TEST_CLASS_WITH_FLAGS(AbilitySpawnerMapTest, "Project.Functional Tests.ShooterTe
 			.StartWhen([this]() { return nullptr != Spawner->FindFirstPlayerPawn(); }, LoadingScreenTimeout)
 			.Do([this]() {
 				Player = CastChecked<AHunterCharacter>(Spawner->FindFirstPlayerPawn());
-				AbilitySystemComponent = Player->GetHunterAbilitySystemComponent();
+				AbilitySystemComponent = Player->GetLyraAbilitySystemComponent();
 				ASSERT_THAT(IsNotNull(AbilitySystemComponent));
 
 				HealthSet = AbilitySystemComponent->GetSetChecked<UHunterHealthSet>();

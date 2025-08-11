@@ -2,11 +2,11 @@
 
 #include "InventoryFragment_SetStats.h"
 
-#include "Inventory/HunterInventoryItemInstance.h"
+#include "Inventory/LyraInventoryItemInstance.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(InventoryFragment_SetStats)
 
-void UInventoryFragment_SetStats::OnInstanceCreated(UHunterInventoryItemInstance* Instance) const
+void UInventoryFragment_SetStats::OnInstanceCreated(ULyraInventoryItemInstance* Instance) const
 {
 	for (const auto& KVP : InitialItemStats)
 	{

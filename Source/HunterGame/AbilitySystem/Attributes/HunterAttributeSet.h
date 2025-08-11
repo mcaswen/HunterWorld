@@ -9,7 +9,7 @@
 #define UE_API HUNTERGAME_API
 
 class AActor;
-class UHunterAbilitySystemComponent;
+class ULyraAbilitySystemComponent;
 class UObject;
 class UWorld;
 struct FGameplayEffectSpec;
@@ -59,7 +59,7 @@ public:
 
 	UE_API UWorld* GetWorld() const override;
 
-	UE_API UHunterAbilitySystemComponent* GetHunterAbilitySystemComponent() const;
+	UE_API ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const;
 };
 
 #undef UE_API

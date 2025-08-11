@@ -11,16 +11,16 @@
 
 #define UE_API HUNTERGAME_API
 
-struct FHunterVerbMessage;
+struct FLyraVerbMessage;
 
 class AController;
 class AHunterPlayerController;
 class APlayerState;
 class FName;
 class UAbilitySystemComponent;
-class UHunterAbilitySystemComponent;
+class ULyraAbilitySystemComponent;
 class ULyraExperienceDefinition;
-class UHunterPawnData;
+class ULyraPawnData;
 class UObject;
 struct FFrame;
 struct FGameplayTag;
@@ -59,13 +59,13 @@ public:
 	UE_API AHunterPlayerController* GetHunterPlayerController() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Hunter|PlayerState")
-	UHunterAbilitySystemComponent* GetHunterAbilitySystemComponent() const { return AbilitySystemComponent; }
+	ULyraAbilitySystemComponent* GetLyraAbilitySystemComponent() const { return AbilitySystemComponent; }
 	UE_API virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 	template <class T>
 	const T* GetPawnData() const { return Cast<T>(PawnData); }
 
-	UE_API void SetPawnData(const UHunterPawnData* InPawnData);
+	UE_API void SetPawnData(const ULyraPawnData* InPawnData);
 
 	//~AActor interface
 	UE_API virtual void PreInitializeComponents() override;
@@ -86,7 +86,7 @@ public:
 	UE_API virtual FOnHunterTeamIndexChangedDelegate* GetOnTeamIndexChangedDelegate() override;
 	//~End of IHunterTeamAgentInterface interface
 
-	static UE_API const FName NAME_HunterAbilityReady;
+	static UE_API const FName NAME_LyraAbilityReady;
 
 	UE_API void SetPlayerConnectionType(EHunterPlayerConnectionType NewType);
 	EHunterPlayerConnectionType GetPlayerConnectionType() const { return MyPlayerConnectionType; }
@@ -126,7 +126,7 @@ public:
 	// Send a message to just this player
 	// (use only for client notifications like accolades, quest toasts, etc... that can handle being occasionally lost)
 	UFUNCTION(Client, Unreliable, BlueprintCallable, Category = "Hunter|PlayerState")
-	UE_API void ClientBroadcastMessage(const FHunterVerbMessage Message);
+	UE_API void ClientBroadcastMessage(const FLyraVerbMessage Message);
 
 	// Gets the replicated view rotation of this player, used for spectating
 	UE_API FRotator GetReplicatedViewRotation() const;
@@ -144,13 +144,13 @@ protected:
 protected:
 
 	UPROPERTY(ReplicatedUsing = OnRep_PawnData)
-	TObjectPtr<const UHunterPawnData> PawnData;
+	TObjectPtr<const ULyraPawnData> PawnData;
 
 private:
 
 	// The ability system component sub-object used by player characters.
 	UPROPERTY(VisibleAnywhere, Category = "Hunter|PlayerState")
-	TObjectPtr<UHunterAbilitySystemComponent> AbilitySystemComponent;
+	TObjectPtr<ULyraAbilitySystemComponent> AbilitySystemComponent;
 
 	// Health attribute set used by this actor.
 	UPROPERTY()

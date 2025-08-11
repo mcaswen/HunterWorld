@@ -5,7 +5,7 @@
 #include "Engine/GameViewportClient.h"
 #include "IActorIndicatorWidget.h"
 #include "Layout/ArrangedChildren.h"
-#include "HunterIndicatorManagerComponent.h"
+#include "LyraIndicatorManagerComponent.h"
 #include "SceneView.h"
 #include "UI/IndicatorSystem/IndicatorDescriptor.h"
 #include "Widgets/Layout/SBox.h"
@@ -166,10 +166,10 @@ EActiveTimerReturnType SActorCanvas::UpdateCanvas(double InCurrentTime, float In
 
 	// Grab the local player
 	ULocalPlayer* LocalPlayer = LocalPlayerContext.GetLocalPlayer();
-	UHunterIndicatorManagerComponent* IndicatorComponent = IndicatorComponentPtr.Get();
+	ULyraIndicatorManagerComponent* IndicatorComponent = IndicatorComponentPtr.Get();
 	if (IndicatorComponent == nullptr)
 	{
-		IndicatorComponent = UHunterIndicatorManagerComponent::GetComponent(LocalPlayerContext.GetPlayerController());
+		IndicatorComponent = ULyraIndicatorManagerComponent::GetComponent(LocalPlayerContext.GetPlayerController());
 		if (IndicatorComponent)
 		{
 			// World may have changed

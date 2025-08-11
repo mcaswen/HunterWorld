@@ -47,7 +47,7 @@ EDataValidationResult UGameFeatureAction_AddWidgets::IsDataValid(FDataValidation
 
 	{
 		int32 EntryIndex = 0;
-		for (const FHunterHUDLayoutRequest& Entry : Layout)
+		for (const FLyraHUDLayoutRequest& Entry : Layout)
 		{
 			if (Entry.LayoutClass.IsNull())
 			{
@@ -148,7 +148,7 @@ void UGameFeatureAction_AddWidgets::AddWidgets(AActor* Actor, FPerContextData& A
 	{
 		FPerActorData& ActorData = ActiveData.ActorData.FindOrAdd(HUD);
 
-		for (const FHunterHUDLayoutRequest& Entry : Layout)
+		for (const FLyraHUDLayoutRequest& Entry : Layout)
 		{
 			if (TSubclassOf<UCommonActivatableWidget> ConcreteWidgetClass = Entry.LayoutClass.Get())
 			{

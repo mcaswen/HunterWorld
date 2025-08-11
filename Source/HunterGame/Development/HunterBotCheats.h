@@ -6,7 +6,7 @@
 
 #include "HunterBotCheats.generated.h"
 
-class UHunterBotCreationComponent;
+class ULyraBotCreationComponent;
 class UObject;
 struct FFrame;
 
@@ -28,5 +28,5 @@ public:
 	void RemovePlayerBot();
 
 private:
-	UHunterBotCreationComponent* GetBotComponent() const;
+	ULyraBotCreationComponent* GetBotComponent() const;
 };

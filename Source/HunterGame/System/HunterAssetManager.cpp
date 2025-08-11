@@ -5,7 +5,7 @@
 #include "HunterGameplayTags.h"
 #include "LyraGameData.h"
 #include "AbilitySystemGlobals.h"
-#include "Character/HunterPawnData.h"
+#include "Character/LyraPawnData.h"
 #include "Misc/App.h"
 #include "Stats/StatsMisc.h"
 #include "Engine/Engine.h"
@@ -136,7 +136,7 @@ const ULyraGameData& UHunterAssetManager::GetGameData()
 	return GetOrLoadTypedGameData<ULyraGameData>(LyraGameDataPath);
 }
 
-const UHunterPawnData* UHunterAssetManager::GetDefaultPawnData() const
+const ULyraPawnData* UHunterAssetManager::GetDefaultPawnData() const
 {
 	return GetAsset(DefaultPawnData);
 }

@@ -4,7 +4,7 @@
 #include "AbilitySystem/Attributes/HunterHealthSet.h"
 #include "AbilitySystem/Attributes/HunterCombatSet.h"
 #include "AbilitySystem/HunterGameplayEffectContext.h"
-#include "AbilitySystem/HunterAbilitySourceInterface.h"
+#include "AbilitySystem/LyraAbilitySourceInterface.h"
 #include "Engine/World.h"
 #include "HunterLogChannels.h"
 #include "Teams/HunterTeamSubsystem.h"
@@ -110,13 +110,13 @@ void UHunterDamageExecution::Execute_Implementation(const FGameplayEffectCustomE
 	}
 	else
 	{
-		UE_LOG(LogHunterAbilitySystem, Error, TEXT("Damage Calculation cannot deduce a source location for damage coming from %s; Falling back to WORLD_MAX dist!"), *GetPathNameSafe(Spec.Def));
+		UE_LOG(LogLyraAbilitySystem, Error, TEXT("Damage Calculation cannot deduce a source location for damage coming from %s; Falling back to WORLD_MAX dist!"), *GetPathNameSafe(Spec.Def));
 	}
 
 	// Apply ability source modifiers
 	float PhysicalMaterialAttenuation = 1.0f;
 	float DistanceAttenuation = 1.0f;
-	if (const IHunterAbilitySourceInterface* AbilitySource = TypedContext->GetAbilitySource())
+	if (const ILyraAbilitySourceInterface* AbilitySource = TypedContext->GetAbilitySource())
 	{
 		if (const UPhysicalMaterial* PhysMat = TypedContext->GetPhysicalMaterial())
 		{

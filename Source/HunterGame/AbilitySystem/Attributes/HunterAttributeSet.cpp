@@ -2,7 +2,7 @@
 
 #include "HunterAttributeSet.h"
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterAttributeSet)
 
@@ -21,8 +21,8 @@ UWorld* UHunterAttributeSet::GetWorld() const
 	return Outer->GetWorld();
 }
 
-UHunterAbilitySystemComponent* UHunterAttributeSet::GetHunterAbilitySystemComponent() const
+ULyraAbilitySystemComponent* UHunterAttributeSet::GetLyraAbilitySystemComponent() const
 {
-	return Cast<UHunterAbilitySystemComponent>(GetOwningAbilitySystemComponent());
+	return Cast<ULyraAbilitySystemComponent>(GetOwningAbilitySystemComponent());
 }
 

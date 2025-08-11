@@ -11,7 +11,7 @@
 
 class UGameplayAbility;
 class UGameplayEffect;
-class UHunterAbilitySystemComponent;
+class ULyraAbilitySystemComponent;
 class UObject;
 struct FActiveGameplayEffectHandle;
 struct FFrame;
@@ -23,10 +23,10 @@ struct FGlobalAppliedAbilityList
 	GENERATED_BODY()
 
 	UPROPERTY()
-	TMap<TObjectPtr<UHunterAbilitySystemComponent>, FGameplayAbilitySpecHandle> Handles;
+	TMap<TObjectPtr<ULyraAbilitySystemComponent>, FGameplayAbilitySpecHandle> Handles;
 
-	void AddToASC(TSubclassOf<UGameplayAbility> Ability, UHunterAbilitySystemComponent* ASC);
-	void RemoveFromASC(UHunterAbilitySystemComponent* ASC);
+	void AddToASC(TSubclassOf<UGameplayAbility> Ability, ULyraAbilitySystemComponent* ASC);
+	void RemoveFromASC(ULyraAbilitySystemComponent* ASC);
 	void RemoveFromAll();
 };
 
@@ -36,10 +36,10 @@ struct FGlobalAppliedEffectList
 	GENERATED_BODY()
 
 	UPROPERTY()
-	TMap<TObjectPtr<UHunterAbilitySystemComponent>, FActiveGameplayEffectHandle> Handles;
+	TMap<TObjectPtr<ULyraAbilitySystemComponent>, FActiveGameplayEffectHandle> Handles;
 
-	void AddToASC(TSubclassOf<UGameplayEffect> Effect, UHunterAbilitySystemComponent* ASC);
-	void RemoveFromASC(UHunterAbilitySystemComponent* ASC);
+	void AddToASC(TSubclassOf<UGameplayEffect> Effect, ULyraAbilitySystemComponent* ASC);
+	void RemoveFromASC(ULyraAbilitySystemComponent* ASC);
 	void RemoveFromAll();
 };
 
@@ -64,10 +64,10 @@ public:
 	void RemoveEffectFromAll(TSubclassOf<UGameplayEffect> Effect);
 
 	/** Register an ASC with global system and apply any active global effects/abilities. */
-	void RegisterASC(UHunterAbilitySystemComponent* ASC);
+	void RegisterASC(ULyraAbilitySystemComponent* ASC);
 
 	/** Removes an ASC from the global system, along with any active global effects/abilities. */
-	void UnregisterASC(UHunterAbilitySystemComponent* ASC);
+	void UnregisterASC(ULyraAbilitySystemComponent* ASC);
 
 private:
 	UPROPERTY()
@@ -77,5 +77,5 @@ private:
 	TMap<TSubclassOf<UGameplayEffect>, FGlobalAppliedEffectList> AppliedEffects;
 
 	UPROPERTY()
-	TArray<TObjectPtr<UHunterAbilitySystemComponent>> RegisteredASCs;
+	TArray<TObjectPtr<ULyraAbilitySystemComponent>> RegisteredASCs;
 };

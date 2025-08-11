@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "HunterListView.h"
-#include "HunterWidgetFactory.h"
+#include "LyraWidgetFactory.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterListView)
 
@@ -34,7 +34,7 @@ UUserWidget& UHunterListView::OnGenerateEntryWidgetInternal(UObject* Item, TSubc
 {
 	TSubclassOf<UUserWidget> WidgetClass = DesiredEntryClass;
 	
-	for (const UHunterWidgetFactory* Rule : FactoryRules)
+	for (const ULyraWidgetFactory* Rule : FactoryRules)
 	{
 		if (Rule)
 		{

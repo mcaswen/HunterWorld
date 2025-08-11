@@ -11,7 +11,7 @@
 
 class SWidget;
 class UIndicatorDescriptor;
-class UHunterIndicatorManagerComponent;
+class ULyraIndicatorManagerComponent;
 class UUserWidget;
 struct FFrame;
 struct FSceneViewProjectionData;
@@ -183,8 +183,8 @@ public:
 	}
 
 public:
-	UHunterIndicatorManagerComponent* GetIndicatorManagerComponent() { return ManagerPtr.Get(); }
-	UE_API void SetIndicatorManagerComponent(UHunterIndicatorManagerComponent* InManager);
+	ULyraIndicatorManagerComponent* GetIndicatorManagerComponent() { return ManagerPtr.Get(); }
+	UE_API void SetIndicatorManagerComponent(ULyraIndicatorManagerComponent* InManager);
 	
 	UFUNCTION(BlueprintCallable)
 	UE_API void UnregisterIndicator();
@@ -234,7 +234,7 @@ private:
 	TSoftClassPtr<UUserWidget> IndicatorWidgetClass;
 
 	UPROPERTY()
-	TWeakObjectPtr<UHunterIndicatorManagerComponent> ManagerPtr;
+	TWeakObjectPtr<ULyraIndicatorManagerComponent> ManagerPtr;
 
 	TWeakPtr<SWidget> Content;
 	TWeakPtr<SWidget> CanvasHost;

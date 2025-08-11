@@ -18,7 +18,7 @@ FShooterTestsActorTestHelper::FShooterTestsActorTestHelper(APawn* Pawn)
 	SkeletalMeshComponent = Cast<USkeletalMeshComponent>(ActorComponent);
 	checkf(SkeletalMeshComponent, TEXT("Cannot cast component to SkeletalMeshComponent."));
 	
-	AbilitySystemComponent = HunterCharacter->GetHunterAbilitySystemComponent();
+	AbilitySystemComponent = HunterCharacter->GetLyraAbilitySystemComponent();
 	checkf(AbilitySystemComponent, TEXT("Hunter Character does not have a valid AbilitySystemComponent."));
 
 	const FName CharacterSpawn = TEXT("GameplayCue.Character.Spawn");

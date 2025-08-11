@@ -5,7 +5,7 @@
 #include "GameFramework/CheatManager.h"
 #include "HunterCheatManager.generated.h"
 
-class UHunterAbilitySystemComponent;
+class ULyraAbilitySystemComponent;
 
 
 #ifndef USING_CHEAT_MANAGER
@@ -103,8 +103,8 @@ protected:
 	virtual void DisableFixedCamera();
 	bool InFixedCamera() const;
 
-	void ApplySetByCallerDamage(UHunterAbilitySystemComponent* HunterASC, float DamageAmount);
-	void ApplySetByCallerHeal(UHunterAbilitySystemComponent* HunterASC, float HealAmount);
+	void ApplySetByCallerDamage(ULyraAbilitySystemComponent* HunterASC, float DamageAmount);
+	void ApplySetByCallerHeal(ULyraAbilitySystemComponent* HunterASC, float HealAmount);
 
-	UHunterAbilitySystemComponent* GetPlayerAbilitySystemComponent() const;
+	ULyraAbilitySystemComponent* GetPlayerAbilitySystemComponent() const;
 };

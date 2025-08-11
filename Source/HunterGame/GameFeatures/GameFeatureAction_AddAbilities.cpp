@@ -3,7 +3,7 @@
 #include "GameFeatureAction_AddAbilities.h"
 #include "Engine/GameInstance.h"
 #include "Components/GameFrameworkComponentManager.h"
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Engine/World.h"
 #include "Player/HunterPlayerState.h" //@TODO: For the fname
 #include "GameFeatures/GameFeatureAction_WorldActionBase.h"
@@ -63,7 +63,7 @@ EDataValidationResult UGameFeatureAction_AddAbilities::IsDataValid(FDataValidati
 		}
 
 		int32 AbilityIndex = 0;
-		for (const FHunterAbilityGrant& Ability : Entry.GrantedAbilities)
+		for (const FLyraAbilityGrant& Ability : Entry.GrantedAbilities)
 		{
 			if (Ability.AbilityType.IsNull())
 			{
@@ -85,7 +85,7 @@ EDataValidationResult UGameFeatureAction_AddAbilities::IsDataValid(FDataValidati
 		}
 
 		int32 AttributeSetIndex = 0;
-		for (const TSoftObjectPtr<const UHunterAbilitySet>& AttributeSetPtr : Entry.GrantedAbilitySets)
+		for (const TSoftObjectPtr<const ULyraAbilitySet>& AttributeSetPtr : Entry.GrantedAbilitySets)
 		{
 			if (AttributeSetPtr.IsNull())
 			{
@@ -151,7 +151,7 @@ void UGameFeatureAction_AddAbilities::HandleActorExtension(AActor* Actor, FName 
 		{
 			RemoveActorAbilities(Actor, *ActiveData);
 		}
-		else if ((EventName == UGameFrameworkComponentManager::NAME_ExtensionAdded) || (EventName == AHunterPlayerState::NAME_HunterAbilityReady))
+		else if ((EventName == UGameFrameworkComponentManager::NAME_ExtensionAdded) || (EventName == AHunterPlayerState::NAME_LyraAbilityReady))
 		{
 			AddActorAbilities(Actor, Entry, *ActiveData);
 		}
@@ -179,7 +179,7 @@ void UGameFeatureAction_AddAbilities::AddActorAbilities(AActor* Actor, const FGa
 		AddedExtensions.Attributes.Reserve(AbilitiesEntry.GrantedAttributes.Num());
 		AddedExtensions.AbilitySetHandles.Reserve(AbilitiesEntry.GrantedAbilitySets.Num());
 
-		for (const FHunterAbilityGrant& Ability : AbilitiesEntry.GrantedAbilities)
+		for (const FLyraAbilityGrant& Ability : AbilitiesEntry.GrantedAbilities)
 		{
 			if (!Ability.AbilityType.IsNull())
 			{
@@ -213,10 +213,10 @@ void UGameFeatureAction_AddAbilities::AddActorAbilities(AActor* Actor, const FGa
 			}
 		}
 
-		UHunterAbilitySystemComponent* HunterASC = CastChecked<UHunterAbilitySystemComponent>(AbilitySystemComponent);
-		for (const TSoftObjectPtr<const UHunterAbilitySet>& SetPtr : AbilitiesEntry.GrantedAbilitySets)
+		ULyraAbilitySystemComponent* HunterASC = CastChecked<ULyraAbilitySystemComponent>(AbilitySystemComponent);
+		for (const TSoftObjectPtr<const ULyraAbilitySet>& SetPtr : AbilitiesEntry.GrantedAbilitySets)
 		{
-			if (const UHunterAbilitySet* Set = SetPtr.Get())
+			if (const ULyraAbilitySet* Set = SetPtr.Get())
 			{
 				Set->GiveToAbilitySystem(HunterASC, &AddedExtensions.AbilitySetHandles.AddDefaulted_GetRef());
 			}
@@ -246,8 +246,8 @@ void UGameFeatureAction_AddAbilities::RemoveActorAbilities(AActor* Actor, FPerCo
 				AbilitySystemComponent->SetRemoveAbilityOnEnd(AbilityHandle);
 			}
 
-			UHunterAbilitySystemComponent* HunterASC = CastChecked<UHunterAbilitySystemComponent>(AbilitySystemComponent);
-			for (FHunterAbilitySet_GrantedHandles& SetHandle : ActorExtensions->AbilitySetHandles)
+			ULyraAbilitySystemComponent* HunterASC = CastChecked<ULyraAbilitySystemComponent>(AbilitySystemComponent);
+			for (FLyraAbilitySet_GrantedHandles& SetHandle : ActorExtensions->AbilitySetHandles)
 			{
 				SetHandle.TakeFromAbilitySystem(HunterASC);
 			}

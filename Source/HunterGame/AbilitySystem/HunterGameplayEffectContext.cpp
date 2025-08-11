@@ -2,7 +2,7 @@
 
 #include "HunterGameplayEffectContext.h"
 
-#include "AbilitySystem/HunterAbilitySourceInterface.h"
+#include "AbilitySystem/LyraAbilitySourceInterface.h"
 #include "Engine/HitResult.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 
@@ -45,15 +45,15 @@ namespace UE::Net
 }
 #endif
 
-void FHunterGameplayEffectContext::SetAbilitySource(const IHunterAbilitySourceInterface* InObject, float InSourceLevel)
+void FHunterGameplayEffectContext::SetAbilitySource(const ILyraAbilitySourceInterface* InObject, float InSourceLevel)
 {
 	AbilitySourceObject = MakeWeakObjectPtr(Cast<const UObject>(InObject));
 	//SourceLevel = InSourceLevel;
 }
 
-const IHunterAbilitySourceInterface* FHunterGameplayEffectContext::GetAbilitySource() const
+const ILyraAbilitySourceInterface* FHunterGameplayEffectContext::GetAbilitySource() const
 {
-	return Cast<IHunterAbilitySourceInterface>(AbilitySourceObject.Get());
+	return Cast<ILyraAbilitySourceInterface>(AbilitySourceObject.Get());
 }
 
 const UPhysicalMaterial* FHunterGameplayEffectContext::GetPhysicalMaterial() const

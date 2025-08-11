@@ -2,9 +2,9 @@
 
 #include "HunterCharacter.h"
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Camera/HunterCameraComponent.h"
-#include "Character/HunterHealthComponent.h"
+#include "Character/LyraHealthComponent.h"
 #include "Character/HunterPawnExtensionComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -65,7 +65,7 @@ AHunterCharacter::AHunterCharacter(const FObjectInitializer& ObjectInitializer)
 	PawnExtComponent->OnAbilitySystemInitialized_RegisterAndCall(FSimpleMulticastDelegate::FDelegate::CreateUObject(this, &ThisClass::OnAbilitySystemInitialized));
 	PawnExtComponent->OnAbilitySystemUninitialized_Register(FSimpleMulticastDelegate::FDelegate::CreateUObject(this, &ThisClass::OnAbilitySystemUninitialized));
 
-	HealthComponent = CreateDefaultSubobject<UHunterHealthComponent>(TEXT("HealthComponent"));
+	HealthComponent = CreateDefaultSubobject<ULyraHealthComponent>(TEXT("HealthComponent"));
 	HealthComponent->OnDeathStarted.AddDynamic(this, &ThisClass::OnDeathStarted);
 	HealthComponent->OnDeathFinished.AddDynamic(this, &ThisClass::OnDeathFinished);
 
@@ -179,9 +179,9 @@ AHunterPlayerState* AHunterCharacter::GetHunterPlayerState() const
 	return CastChecked<AHunterPlayerState>(GetPlayerState(), ECastCheckedType::NullAllowed);
 }
 
-UHunterAbilitySystemComponent* AHunterCharacter::GetHunterAbilitySystemComponent() const
+ULyraAbilitySystemComponent* AHunterCharacter::GetLyraAbilitySystemComponent() const
 {
-	return Cast<UHunterAbilitySystemComponent>(GetAbilitySystemComponent());
+	return Cast<ULyraAbilitySystemComponent>(GetAbilitySystemComponent());
 }
 
 UAbilitySystemComponent* AHunterCharacter::GetAbilitySystemComponent() const
@@ -191,12 +191,12 @@ UAbilitySystemComponent* AHunterCharacter::GetAbilitySystemComponent() const
 		return nullptr;
 	}
 
-	return PawnExtComponent->GetHunterAbilitySystemComponent();
+	return PawnExtComponent->GetLyraAbilitySystemComponent();
 }
 
 void AHunterCharacter::OnAbilitySystemInitialized()
 {
-	UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent();
+	ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent();
 	check(HunterASC);
 
 	HealthComponent->InitializeWithAbilitySystem(HunterASC);
@@ -270,7 +270,7 @@ void AHunterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 void AHunterCharacter::InitializeGameplayTags()
 {
 	// Clear tags that may be lingering on the ability system from the previous pawn.
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		for (const TPair<uint8, FGameplayTag>& TagMapping : HunterGameplayTags::MovementModeTagMap)
 		{
@@ -295,7 +295,7 @@ void AHunterCharacter::InitializeGameplayTags()
 
 void AHunterCharacter::GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const
 {
-	if (const UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (const ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		HunterASC->GetOwnedGameplayTags(TagContainer);
 	}
@@ -303,7 +303,7 @@ void AHunterCharacter::GetOwnedGameplayTags(FGameplayTagContainer& TagContainer)
 
 bool AHunterCharacter::HasMatchingGameplayTag(FGameplayTag TagToCheck) const
 {
-	if (const UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (const ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		return HunterASC->HasMatchingGameplayTag(TagToCheck);
 	}
@@ -313,7 +313,7 @@ bool AHunterCharacter::HasMatchingGameplayTag(FGameplayTag TagToCheck) const
 
 bool AHunterCharacter::HasAllMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const
 {
-	if (const UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (const ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		return HunterASC->HasAllMatchingGameplayTags(TagContainer);
 	}
@@ -323,7 +323,7 @@ bool AHunterCharacter::HasAllMatchingGameplayTags(const FGameplayTagContainer& T
 
 bool AHunterCharacter::HasAnyMatchingGameplayTags(const FGameplayTagContainer& TagContainer) const
 {
-	if (const UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (const ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		return HunterASC->HasAnyMatchingGameplayTags(TagContainer);
 	}
@@ -381,7 +381,7 @@ void AHunterCharacter::UninitAndDestroy()
 	}
 
 	// Uninitialize the ASC if we're still the avatar actor (otherwise another pawn already did it when they became the avatar actor)
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		if (HunterASC->GetAvatarActor() == this)
 		{
@@ -404,7 +404,7 @@ void AHunterCharacter::OnMovementModeChanged(EMovementMode PrevMovementMode, uin
 
 void AHunterCharacter::SetMovementModeTag(EMovementMode MovementMode, uint8 CustomMovementMode, bool bTagEnabled)
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		const FGameplayTag* MovementModeTag = nullptr;
 		if (MovementMode == MOVE_Custom)
@@ -439,7 +439,7 @@ void AHunterCharacter::ToggleCrouch()
 
 void AHunterCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		HunterASC->SetLooseGameplayTagCount(HunterGameplayTags::Status_Crouching, 1);
 	}
@@ -450,7 +450,7 @@ void AHunterCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHei
 
 void AHunterCharacter::OnEndCrouch(float HalfHeightAdjust, float ScaledHalfHeightAdjust)
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		HunterASC->SetLooseGameplayTagCount(HunterGameplayTags::Status_Crouching, 0);
 	}

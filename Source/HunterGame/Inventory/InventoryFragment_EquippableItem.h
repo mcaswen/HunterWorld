@@ -2,20 +2,20 @@
 
 #pragma once
 
-#include "Inventory/HunterInventoryItemDefinition.h"
+#include "Inventory/LyraInventoryItemDefinition.h"
 #include "Templates/SubclassOf.h"
 
 #include "InventoryFragment_EquippableItem.generated.h"
 
-class UHunterEquipmentDefinition;
+class ULyraEquipmentDefinition;
 class UObject;
 
 UCLASS()
-class UInventoryFragment_EquippableItem : public UHunterInventoryItemFragment
+class UInventoryFragment_EquippableItem : public ULyraInventoryItemFragment
 {
 	GENERATED_BODY()
 
 public:
 	UPROPERTY(EditAnywhere, Category=Hunter)
-	TSubclassOf<UHunterEquipmentDefinition> EquipmentDefinition;
+	TSubclassOf<ULyraEquipmentDefinition> EquipmentDefinition;
 };

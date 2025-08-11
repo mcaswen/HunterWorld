@@ -9,7 +9,7 @@
 #define UE_API HUNTERGAME_API
 
 class AController;
-class UHunterIndicatorManagerComponent;
+class ULyraIndicatorManagerComponent;
 class UObject;
 struct FFrame;
 
@@ -23,7 +23,7 @@ public:
 	
 	/**  */
 	UFUNCTION(BlueprintCallable, Category = Indicator)
-	static UE_API UHunterIndicatorManagerComponent* GetIndicatorManagerComponent(AController* Controller);
+	static UE_API ULyraIndicatorManagerComponent* GetIndicatorManagerComponent(AController* Controller);
 };
 
 #undef UE_API

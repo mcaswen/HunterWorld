@@ -6,7 +6,7 @@
 #include "Engine/Engine.h"
 #include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
-#include "HunterCameraMode.h"
+#include "LyraCameraMode.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterCameraComponent)
 
@@ -24,7 +24,7 @@ void UHunterCameraComponent::OnRegister()
 
 	if (!CameraModeStack)
 	{
-		CameraModeStack = NewObject<UHunterCameraModeStack>(this);
+		CameraModeStack = NewObject<ULyraCameraModeStack>(this);
 		check(CameraModeStack);
 	}
 }
@@ -35,7 +35,7 @@ void UHunterCameraComponent::GetCameraView(float DeltaTime, FMinimalViewInfo& De
 
 	UpdateCameraModes();
 
-	FHunterCameraModeView CameraModeView;
+	FLyraCameraModeView CameraModeView;
 	CameraModeStack->EvaluateStack(DeltaTime, CameraModeView);
 
 	// Keep player controller in sync with the latest view.
@@ -90,7 +90,7 @@ void UHunterCameraComponent::UpdateCameraModes()
 	{
 		if (DetermineCameraModeDelegate.IsBound())
 		{
-			if (const TSubclassOf<UHunterCameraMode> CameraMode = DetermineCameraModeDelegate.Execute())
+			if (const TSubclassOf<ULyraCameraMode> CameraMode = DetermineCameraModeDelegate.Execute())
 			{
 				CameraModeStack->PushCameraMode(CameraMode);
 			}

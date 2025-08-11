@@ -12,7 +12,7 @@ class AController;
 class APlayerController;
 class APlayerState;
 class APlayerStart;
-class AHunterPlayerStart;
+class ALyraPlayerStart;
 class AActor;
 
 /**
@@ -33,9 +33,9 @@ public:
 
 protected:
 	// Utility
-	UE_API APlayerStart* GetFirstRandomUnoccupiedPlayerStart(AController* Controller, const TArray<AHunterPlayerStart*>& FoundStartPoints) const;
+	UE_API APlayerStart* GetFirstRandomUnoccupiedPlayerStart(AController* Controller, const TArray<ALyraPlayerStart*>& FoundStartPoints) const;
 	
-	virtual AActor* OnChoosePlayerStart(AController* Player, TArray<AHunterPlayerStart*>& PlayerStarts) { return nullptr; }
+	virtual AActor* OnChoosePlayerStart(AController* Player, TArray<ALyraPlayerStart*>& PlayerStarts) { return nullptr; }
 	virtual void OnFinishRestartPlayer(AController* Player, const FRotator& StartRotation) { }
 
 	UFUNCTION(BlueprintImplementableEvent, meta=(DisplayName=OnFinishRestartPlayer))
@@ -51,7 +51,7 @@ private:
 	/** ~AHunterGameMode */
 
 	UPROPERTY(Transient)
-	TArray<TWeakObjectPtr<AHunterPlayerStart>> CachedPlayerStarts;
+	TArray<TWeakObjectPtr<ALyraPlayerStart>> CachedPlayerStarts;
 
 private:
 	UE_API void OnLevelAdded(ULevel* InLevel, UWorld* InWorld);

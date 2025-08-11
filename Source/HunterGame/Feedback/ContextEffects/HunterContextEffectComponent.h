@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Components/ActorComponent.h"
-#include "HunterContextEffectsInterface.h"
+#include "LyraContextEffectsInterface.h"
 
 #include "HunterContextEffectComponent.generated.h"
 
@@ -21,7 +21,7 @@ struct FFrame;
 struct FHitResult;
 
 UCLASS(MinimalAPI,  ClassGroup=(Custom), hidecategories = (Variable, Tags, ComponentTick, ComponentReplication, Activation, Cooking, AssetUserData, Collision), CollapseCategories, meta=(BlueprintSpawnableComponent) )
-class UHunterContextEffectComponent : public UActorComponent, public IHunterContextEffectsInterface
+class UHunterContextEffectComponent : public UActorComponent, public ILyraContextEffectsInterface
 {
 	GENERATED_BODY()
 

@@ -8,7 +8,7 @@
 
 class AActor;
 class AController;
-class AHunterPlayerStart;
+class ALyraPlayerStart;
 class UObject;
 
 /**
@@ -23,7 +23,7 @@ public:
 
 	UTDM_PlayerSpawningManagmentComponent(const FObjectInitializer& ObjectInitializer);
 
-	virtual AActor* OnChoosePlayerStart(AController* Player, TArray<AHunterPlayerStart*>& PlayerStarts) override;
+	virtual AActor* OnChoosePlayerStart(AController* Player, TArray<ALyraPlayerStart*>& PlayerStarts) override;
 	virtual void OnFinishRestartPlayer(AController* Player, const FRotator& StartRotation) override;
 
 protected:

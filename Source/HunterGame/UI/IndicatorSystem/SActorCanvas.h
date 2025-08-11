@@ -15,7 +15,7 @@ class FSlateRect;
 class FSlateWindowElementList;
 class FWidgetStyle;
 class UIndicatorDescriptor;
-class UHunterIndicatorManagerComponent;
+class ULyraIndicatorManagerComponent;
 struct FSlateBrush;
 
 class SActorCanvas : public SPanel, public FAsyncMixin, public FGCObject
@@ -229,7 +229,7 @@ private:
 	TArray<UIndicatorDescriptor*> InactiveIndicators;
 	
 	FLocalPlayerContext LocalPlayerContext;
-	TWeakObjectPtr<UHunterIndicatorManagerComponent> IndicatorComponentPtr;
+	TWeakObjectPtr<ULyraIndicatorManagerComponent> IndicatorComponentPtr;
 
 	/** All the slots in this canvas */
 	TPanelChildren<FSlot> CanvasChildren;

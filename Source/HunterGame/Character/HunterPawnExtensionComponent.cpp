@@ -2,14 +2,14 @@
 
 #include "HunterPawnExtensionComponent.h"
 
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "Components/GameFrameworkComponentDelegates.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Pawn.h"
 #include "HunterGameplayTags.h"
 #include "HunterLogChannels.h"
-#include "HunterPawnData.h"
+#include "LyraPawnData.h"
 #include "Net/UnrealNetwork.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HunterPawnExtensionComponent)
@@ -73,7 +73,7 @@ void UHunterPawnExtensionComponent::EndPlay(const EEndPlayReason::Type EndPlayRe
 	Super::EndPlay(EndPlayReason);
 }
 
-void UHunterPawnExtensionComponent::SetPawnData(const UHunterPawnData* InPawnData)
+void UHunterPawnExtensionComponent::SetPawnData(const ULyraPawnData* InPawnData)
 {
 	check(InPawnData);
 
@@ -102,7 +102,7 @@ void UHunterPawnExtensionComponent::OnRep_PawnData()
 	CheckDefaultInitialization();
 }
 
-void UHunterPawnExtensionComponent::InitializeAbilitySystem(UHunterAbilitySystemComponent* InASC, AActor* InOwnerActor)
+void UHunterPawnExtensionComponent::InitializeAbilitySystem(ULyraAbilitySystemComponent* InASC, AActor* InOwnerActor)
 {
 	check(InASC);
 	check(InOwnerActor);

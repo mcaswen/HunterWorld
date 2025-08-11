@@ -8,7 +8,7 @@
 #include "HunterPlayerState.h"
 #include "Camera/HunterPlayerCameraManager.h"
 #include "UI/HunterHUD.h"
-#include "AbilitySystem/HunterAbilitySystemComponent.h"
+#include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "EngineUtils.h"
 #include "HunterGameplayTags.h"
 #include "GameFramework/Pawn.h"
@@ -146,10 +146,10 @@ AHunterPlayerState* AHunterPlayerController::GetHunterPlayerState() const
 	return CastChecked<AHunterPlayerState>(PlayerState, ECastCheckedType::NullAllowed);
 }
 
-UHunterAbilitySystemComponent* AHunterPlayerController::GetHunterAbilitySystemComponent() const
+ULyraAbilitySystemComponent* AHunterPlayerController::GetLyraAbilitySystemComponent() const
 {
 	const AHunterPlayerState* HunterPS = GetHunterPlayerState();
-	return (HunterPS ? HunterPS->GetHunterAbilitySystemComponent() : nullptr);
+	return (HunterPS ? HunterPS->GetLyraAbilitySystemComponent() : nullptr);
 }
 
 AHunterHUD* AHunterPlayerController::GetHunterHUD() const
@@ -293,7 +293,7 @@ void AHunterPlayerController::OnRep_PlayerState()
 	{
 		if (AHunterPlayerState* HunterPS = GetPlayerState<AHunterPlayerState>())
 		{
-			if (UHunterAbilitySystemComponent* HunterASC = HunterPS->GetHunterAbilitySystemComponent())
+			if (ULyraAbilitySystemComponent* HunterASC = HunterPS->GetLyraAbilitySystemComponent())
 			{
 				HunterASC->RefreshAbilityActorInfo();
 				HunterASC->TryActivateAbilitiesOnSpawn();
@@ -375,7 +375,7 @@ void AHunterPlayerController::PreProcessInput(const float DeltaTime, const bool 
 
 void AHunterPlayerController::PostProcessInput(const float DeltaTime, const bool bGamePaused)
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		HunterASC->ProcessAbilityInput(DeltaTime, bGamePaused);
 	}
@@ -427,7 +427,7 @@ void AHunterPlayerController::SetIsAutoRunning(const bool bEnabled)
 bool AHunterPlayerController::GetIsAutoRunning() const
 {
 	bool bIsAutoRunning = false;
-	if (const UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (const ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		bIsAutoRunning = HunterASC->GetTagCount(HunterGameplayTags::Status_AutoRunning) > 0;
 	}
@@ -436,7 +436,7 @@ bool AHunterPlayerController::GetIsAutoRunning() const
 
 void AHunterPlayerController::OnStartAutoRun()
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		HunterASC->SetLooseGameplayTagCount(HunterGameplayTags::Status_AutoRunning, 1);
 		K2_OnStartAutoRun();
@@ -445,7 +445,7 @@ void AHunterPlayerController::OnStartAutoRun()
 
 void AHunterPlayerController::OnEndAutoRun()
 {
-	if (UHunterAbilitySystemComponent* HunterASC = GetHunterAbilitySystemComponent())
+	if (ULyraAbilitySystemComponent* HunterASC = GetLyraAbilitySystemComponent())
 	{
 		HunterASC->SetLooseGameplayTagCount(HunterGameplayTags::Status_AutoRunning, 0);
 		K2_OnEndAutoRun();

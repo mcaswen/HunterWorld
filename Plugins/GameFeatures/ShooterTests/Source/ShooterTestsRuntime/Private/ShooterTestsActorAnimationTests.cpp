@@ -8,12 +8,12 @@
 #include "Helpers/CQTestAssetHelper.h"
 
 #include "Engine/DataAsset.h"
-#include "Equipment/HunterEquipmentManagerComponent.h"
-#include "Equipment/HunterPickupDefinition.h"
+#include "Equipment/LyraEquipmentManagerComponent.h"
+#include "Equipment/LyraPickupDefinition.h"
 #include "Misc/Paths.h"
 #include "ObjectBuilder.h"
-#include "Weapons/HunterWeaponInstance.h"
-#include "Weapons/HunterWeaponSpawner.h"
+#include "Weapons/LyraWeaponInstance.h"
+#include "Weapons/LyraWeaponSpawner.h"
 
 /**
  * Creates a standalone test object using the name from the first parameter, in the case `InputCrouchAnimationTest`, which inherits from `ShooterTestsActorAnimationTest<Derived, AsserterType>` to provide us our testing functionality.
@@ -104,7 +104,7 @@ ACTOR_ANIMATION_TEST(InputCrouchAnimationTest, "Project.Functional Tests.Shooter
  */
 ACTOR_ANIMATION_TEST_WITH_FLAGS(WeaponMeleeAnimationTest, "Project.Functional Tests.ShooterTests.Actor.Animation", EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
 {
-	AHunterWeaponSpawner* WeaponSpawnerPad{ nullptr };
+	ALyraWeaponSpawner* WeaponSpawnerPad{ nullptr };
 
 	// Make a call to our base Constructor to set the name of the level to load
 	WeaponMeleeAnimationTest() : ShooterTestsActorAnimationTest(TEXT("L_ShooterTest_Basic"))
@@ -114,9 +114,9 @@ ACTOR_ANIMATION_TEST_WITH_FLAGS(WeaponMeleeAnimationTest, "Project.Functional Te
 	// Checks to see if the specified Weapon is currently equipped by the player
 	bool IsCurrentlyEquippedWeapon(const FString& WeaponName)
 	{
-		if (UHunterEquipmentManagerComponent* EquipmentManager = Player->FindComponentByClass<UHunterEquipmentManagerComponent>())
+		if (ULyraEquipmentManagerComponent* EquipmentManager = Player->FindComponentByClass<ULyraEquipmentManagerComponent>())
 		{
-			if (UHunterWeaponInstance* WeaponInstance = EquipmentManager->GetFirstInstanceOfType<UHunterWeaponInstance>())
+			if (ULyraWeaponInstance* WeaponInstance = EquipmentManager->GetFirstInstanceOfType<ULyraWeaponInstance>())
 			{
 				const bool bIsWeaponEquipped = IsValid(WeaponInstance) && IsValid(WeaponInstance->GetInstigator());
 				return bIsWeaponEquipped && WeaponInstance->GetClass()->GetName().Equals(WeaponName);
@@ -140,10 +140,10 @@ ACTOR_ANIMATION_TEST_WITH_FLAGS(WeaponMeleeAnimationTest, "Project.Functional Te
 
 		UObject* WeaponData = CQTestAssetHelper::FindDataBlueprint(DataAssetFilter, WeaponDataAsset);
 		ASSERT_THAT(IsNotNull(WeaponData));
-		UHunterWeaponPickupDefinition* WeaponDefinition = Cast<UHunterWeaponPickupDefinition>(WeaponData);
+		ULyraWeaponPickupDefinition* WeaponDefinition = Cast<ULyraWeaponPickupDefinition>(WeaponData);
 		ASSERT_THAT(IsNotNull(WeaponDefinition));
 	
-		WeaponSpawnerPad = &TObjectBuilder<AHunterWeaponSpawner>(*Spawner, WeaponSpawnerPadBp)
+		WeaponSpawnerPad = &TObjectBuilder<ALyraWeaponSpawner>(*Spawner, WeaponSpawnerPadBp)
 			.SetParam("WeaponDefinition", WeaponDefinition)
 			.Spawn(Player->GetTransform());
 	

@@ -4,7 +4,7 @@
 
 #include "GameFeatureAction_WorldActionBase.h"
 #include "Abilities/GameplayAbility.h"
-#include "AbilitySystem/HunterAbilitySet.h"
+#include "AbilitySystem/LyraAbilitySet.h"
 
 #include "GameFeatureAction_AddAbilities.generated.h"
 
@@ -13,10 +13,10 @@ class UInputAction;
 class UAttributeSet;
 class UDataTable;
 struct FComponentRequestHandle;
-class UHunterAbilitySet;
+class ULyraAbilitySet;
 
 USTRUCT(BlueprintType)
-struct FHunterAbilityGrant
+struct FLyraAbilityGrant
 {
 	GENERATED_BODY()
 
@@ -54,7 +54,7 @@ struct FGameFeatureAbilitiesEntry
 
 	// List of abilities to grant to actors of the specified class
 	UPROPERTY(EditAnywhere, Category="Abilities")
-	TArray<FHunterAbilityGrant> GrantedAbilities;
+	TArray<FLyraAbilityGrant> GrantedAbilities;
 
 	// List of attribute sets to grant to actors of the specified class 
 	UPROPERTY(EditAnywhere, Category="Attributes")
@@ -62,7 +62,7 @@ struct FGameFeatureAbilitiesEntry
 
 	// List of ability sets to grant to actors of the specified class
 	UPROPERTY(EditAnywhere, Category="Attributes", meta=(AssetBundles="Client,Server"))
-	TArray<TSoftObjectPtr<const UHunterAbilitySet>> GrantedAbilitySets;
+	TArray<TSoftObjectPtr<const ULyraAbilitySet>> GrantedAbilitySets;
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -97,7 +97,7 @@ private:
 	{
 		TArray<FGameplayAbilitySpecHandle> Abilities;
 		TArray<UAttributeSet*> Attributes;
-		TArray<FHunterAbilitySet_GrantedHandles> AbilitySetHandles;
+		TArray<FLyraAbilitySet_GrantedHandles> AbilitySetHandles;
 	};
 
 	struct FPerContextData

@@ -5,7 +5,7 @@
 
 DEFINE_LOG_CATEGORY(LogHunter);
 DEFINE_LOG_CATEGORY(LogHunterExperience);
-DEFINE_LOG_CATEGORY(LogHunterAbilitySystem);
+DEFINE_LOG_CATEGORY(LogLyraAbilitySystem);
 DEFINE_LOG_CATEGORY(LogHunterTeams);
 
 FString GetClientServerContextString(UObject* ContextObject)

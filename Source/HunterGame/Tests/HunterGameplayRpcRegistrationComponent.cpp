@@ -10,10 +10,10 @@
 #include "Misc/CommandLine.h"
 #include "EngineMinimal.h"
 
-#include "Character/HunterHealthComponent.h"
-#include "Inventory/HunterInventoryItemDefinition.h"
-#include "Inventory/HunterInventoryItemInstance.h"
-#include "Inventory/HunterInventoryManagerComponent.h"
+#include "Character/LyraHealthComponent.h"
+#include "Inventory/LyraInventoryItemDefinition.h"
+#include "Inventory/LyraInventoryItemInstance.h"
+#include "Inventory/LyraInventoryManagerComponent.h"
 #include "Character/HunterPawnExtensionComponent.h"
 
 UHunterGameplayRpcRegistrationComponent* UHunterGameplayRpcRegistrationComponent::ObjectInstance = nullptr;
@@ -208,14 +208,14 @@ bool UHunterGameplayRpcRegistrationComponent::HttpGetPlayerVitalsCommand(const F
 	TSharedRef<TJsonWriter<>> JsonWriter = TJsonWriterFactory<>::Create(&ResponseStr);
 	TSharedPtr<FJsonObject> BodyObject = MakeShareable(new FJsonObject());
 	JsonWriter->WriteObjectStart();
-	if (UHunterHealthComponent* HealthComponent = UHunterHealthComponent::FindHealthComponent(PlayerPawn))
+	if (ULyraHealthComponent* HealthComponent = ULyraHealthComponent::FindHealthComponent(PlayerPawn))
 	{
 		JsonWriter->WriteValue(TEXT("health"), FString::SanitizeFloat(HealthComponent->GetHealth()));
 	}
-	if (UHunterInventoryManagerComponent* InventoryComponent = LPC->GetComponentByClass<UHunterInventoryManagerComponent>())
+	if (ULyraInventoryManagerComponent* InventoryComponent = LPC->GetComponentByClass<ULyraInventoryManagerComponent>())
 	{
 		JsonWriter->WriteArrayStart(TEXT("inventory"));
-		for (UHunterInventoryItemInstance* ItemInstance : InventoryComponent->GetAllItems())
+		for (ULyraInventoryItemInstance* ItemInstance : InventoryComponent->GetAllItems())
 		{
 			// TODO: Dump any relevant player info here.
 		}
