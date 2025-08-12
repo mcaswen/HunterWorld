@@ -8,11 +8,11 @@
 #include "Engine/World.h"
 #include "EnhancedPlayerInput.h"
 #include "Input/AimAssistTargetManagerComponent.h"
-#include "Input/HunterAimSensitivityData.h"
-#include "Player/HunterLocalPlayer.h"
-#include "Player/HunterPlayerState.h"
+#include "Input/LyraAimSensitivityData.h"
+#include "Player/LyraLocalPlayer.h"
+#include "Player/LyraPlayerState.h"
 #include "SceneView.h"
-#include "Settings/HunterSettingsShared.h"
+#include "Settings/LyraSettingsShared.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(AimAssistInputModifier)
 
@@ -23,27 +23,27 @@
 
 DEFINE_LOG_CATEGORY(LogAimAssist);
 
-namespace HunterConsoleVariables
+namespace LyraConsoleVariables
 {
 	static bool bEnableAimAssist = true;
 	static FAutoConsoleVariableRef CVarEnableAimAssist(
-		TEXT("Hunter.Weapon.EnableAimAssist"),
+		TEXT("lyra.Weapon.EnableAimAssist"),
 		bEnableAimAssist,
 		TEXT("Should we enable aim assist while shooting?"),
 		ECVF_Cheat);
 
 	static bool bDrawAimAssistDebug = false;
 	static FAutoConsoleVariableRef CVarDrawAimAssistDebug(
-		TEXT("Hunter.Weapon.DrawAimAssistDebug"),
+		TEXT("lyra.Weapon.DrawAimAssistDebug"),
 		bDrawAimAssistDebug,
 		TEXT("Should we draw some debug stats about aim assist?"),
 		ECVF_Cheat);
 }
 
 ///////////////////////////////////////////////////////////////////
-// FHunterAimAssistTarget
+// FLyraAimAssistTarget
 
-void FHunterAimAssistTarget::ResetTarget()
+void FLyraAimAssistTarget::ResetTarget()
 {
 	TargetShapeComponent = nullptr;
 
@@ -64,7 +64,7 @@ void FHunterAimAssistTarget::ResetTarget()
 	bUnderAssistOuterReticle = false;	
 }
 
-FRotator FHunterAimAssistTarget::GetRotationFromMovement(const FAimAssistOwnerViewData& OwnerInfo) const
+FRotator FLyraAimAssistTarget::GetRotationFromMovement(const FAimAssistOwnerViewData& OwnerInfo) const
 {
 	ensure(OwnerInfo.IsDataValid());
 
@@ -81,7 +81,7 @@ FRotator FHunterAimAssistTarget::GetRotationFromMovement(const FAimAssistOwnerVi
 	return RotationToTarget;
 }
 
-float FHunterAimAssistTarget::CalculateRotationToTarget2D(float TargetX, float TargetY, float OffsetY) const
+float FLyraAimAssistTarget::CalculateRotationToTarget2D(float TargetX, float TargetY, float OffsetY) const
 {
 	if (TargetX <= 0.0f)
 	{
@@ -211,9 +211,9 @@ void FAimAssistOwnerViewData::UpdateViewData(const APlayerController* PC)
 	DeltaMovement = (NewLocation - OldLocation);
 
 	// Set the Team ID
-	if (AHunterPlayerState* HunterPS = PlayerController->GetPlayerState<AHunterPlayerState>())
+	if (ALyraPlayerState* LyraPS = PlayerController->GetPlayerState<ALyraPlayerState>())
 	{
-		TeamID = HunterPS->GetTeamId();
+		TeamID = LyraPS->GetTeamId();
 	}
 	else
 	{
@@ -456,7 +456,7 @@ FInputActionValue UAimAssistInputModifier::ModifyRaw_Implementation(const UEnhan
 	TRACE_CPUPROFILER_EVENT_SCOPE(UAimAssistInputModifier::ModifyRaw_Implementation);
 
 #if ENABLE_DRAW_DEBUG
-	if (HunterConsoleVariables::bDrawAimAssistDebug)
+	if (LyraConsoleVariables::bDrawAimAssistDebug)
 	{
 		if (!DebugDrawHandle.IsValid())
 		{
@@ -472,7 +472,7 @@ FInputActionValue UAimAssistInputModifier::ModifyRaw_Implementation(const UEnhan
 #endif
 
 #if !UE_BUILD_SHIPPING
-	if (!HunterConsoleVariables::bEnableAimAssist)
+	if (!LyraConsoleVariables::bEnableAimAssist)
 	{
 		return CurrentValue;
 	}
@@ -553,8 +553,8 @@ void UAimAssistInputModifier::UpdateTargetData(float DeltaTime)
 
 	// Update the targets based on what is visible
 	SwapTargetCaches();
-	const TArray<FHunterAimAssistTarget>& OldTargetCache = GetPreviousTargetCache();
-	TArray<FHunterAimAssistTarget>& NewTargetCache = GetCurrentTargetCache();
+	const TArray<FLyraAimAssistTarget>& OldTargetCache = GetPreviousTargetCache();
+	TArray<FLyraAimAssistTarget>& NewTargetCache = GetCurrentTargetCache();
 	
 	TargetManager->GetVisibleTargets(Filter, Settings, OwnerViewData, OldTargetCache, NewTargetCache);
 
@@ -563,7 +563,7 @@ void UAimAssistInputModifier::UpdateTargetData(float DeltaTime)
 	//
 	float TotalAssistWeight = 0.0f;
 
-	for (FHunterAimAssistTarget& Target : NewTargetCache)
+	for (FLyraAimAssistTarget& Target : NewTargetCache)
 	{
 		if (Target.bUnderAssistOuterReticle && Target.bIsVisible)
 		{
@@ -584,23 +584,23 @@ void UAimAssistInputModifier::UpdateTargetData(float DeltaTime)
 	// Normalize the weights.
 	if (TotalAssistWeight > 0.0f)
 	{
-		for (FHunterAimAssistTarget& Target : NewTargetCache)
+		for (FLyraAimAssistTarget& Target : NewTargetCache)
 		{
 			Target.AssistWeight = (Target.AssistWeight / TotalAssistWeight);
 		}
 	}
 }
 
-const float UAimAssistInputModifier::GetSensitivtyScalar(const UHunterSettingsShared* SharedSettings) const
+const float UAimAssistInputModifier::GetSensitivtyScalar(const ULyraSettingsShared* SharedSettings) const
 {
 	if (SharedSettings && SensitivityLevelTable)
 	{
-		const EHunterGamepadSensitivity Sens = TargetingType == EHunterTargetingType::Normal ? SharedSettings->GetGamepadLookSensitivityPreset() : SharedSettings->GetGamepadTargetingSensitivityPreset();
+		const ELyraGamepadSensitivity Sens = TargetingType == ELyraTargetingType::Normal ? SharedSettings->GetGamepadLookSensitivityPreset() : SharedSettings->GetGamepadTargetingSensitivityPreset();
 		return SensitivityLevelTable->SensitivtyEnumToFloat(Sens);
 	}
 	
 	UE_LOG(LogAimAssist, Warning, TEXT("SensitivityLevelTable is null, using default value!"));
-	return (TargetingType == EHunterTargetingType::Normal) ? 1.0f : 0.5f;	
+	return (TargetingType == ELyraTargetingType::Normal) ? 1.0f : 0.5f;	
 }
 
 FRotator UAimAssistInputModifier::UpdateRotationalVelocity(APlayerController* PC, float DeltaTime, FVector CurrentLookInputValue, FVector CurrentMoveInputValue)
@@ -611,21 +611,21 @@ FRotator UAimAssistInputModifier::UpdateRotationalVelocity(APlayerController* PC
 	float PullStrength = 0.0f;
 	float SlowStrength = 0.0f;
 	
-	const TArray<FHunterAimAssistTarget>& TargetCache = GetCurrentTargetCache();
+	const TArray<FLyraAimAssistTarget>& TargetCache = GetCurrentTargetCache();
 
 	float LookStickDeadzone = 0.25f;
 	float MoveStickDeadzone = 0.25f;
-	float SettingStrengthScalar = (TargetingType == EHunterTargetingType::Normal) ? 1.0f : 0.5f;
+	float SettingStrengthScalar = (TargetingType == ELyraTargetingType::Normal) ? 1.0f : 0.5f;
 
-	if (UHunterLocalPlayer* LP = Cast<UHunterLocalPlayer>(PC->GetLocalPlayer()))
+	if (ULyraLocalPlayer* LP = Cast<ULyraLocalPlayer>(PC->GetLocalPlayer()))
 	{
-		UHunterSettingsShared* SharedSettings = LP->GetSharedSettings();
+		ULyraSettingsShared* SharedSettings = LP->GetSharedSettings();
 		LookStickDeadzone = SharedSettings->GetGamepadLookStickDeadZone();
 		MoveStickDeadzone = SharedSettings->GetGamepadMoveStickDeadZone();
 		SettingStrengthScalar = GetSensitivtyScalar(SharedSettings);
 	}
 	
-	for (const FHunterAimAssistTarget& Target : TargetCache)
+	for (const FLyraAimAssistTarget& Target : TargetCache)
 	{
 		if (Target.bUnderAssistOuterReticle && Target.bIsVisible)
 		{
@@ -756,9 +756,9 @@ FRotator UAimAssistInputModifier::UpdateRotationalVelocity(APlayerController* PC
 	return RotationalVelocity;
 }
 
-void UAimAssistInputModifier::CalculateTargetStrengths(const FHunterAimAssistTarget& Target, float& OutPullStrength, float& OutSlowStrength) const
+void UAimAssistInputModifier::CalculateTargetStrengths(const FLyraAimAssistTarget& Target, float& OutPullStrength, float& OutSlowStrength) const
 {
-	const bool bIsADS = (TargetingType == EHunterTargetingType::ADS);
+	const bool bIsADS = (TargetingType == ELyraTargetingType::ADS);
 	
 	if (Target.bUnderAssistInnerReticle)
 	{
@@ -799,12 +799,12 @@ void UAimAssistInputModifier::CalculateTargetStrengths(const FHunterAimAssistTar
 #if ENABLE_DRAW_DEBUG
 void UAimAssistInputModifier::AimAssistDebugDraw(UCanvas* Canvas, APlayerController* PC)
 {
-	if (!Canvas || !OwnerViewData.IsDataValid() || !HunterConsoleVariables::bDrawAimAssistDebug)
+	if (!Canvas || !OwnerViewData.IsDataValid() || !LyraConsoleVariables::bDrawAimAssistDebug)
 	{
 		return;
 	}
 
-	const bool bIsADS = (TargetingType == EHunterTargetingType::ADS);
+	const bool bIsADS = (TargetingType == ELyraTargetingType::ADS);
 	
 	FDisplayDebugManager& DisplayDebugManager = Canvas->DisplayDebugManager;
 	DisplayDebugManager.Initialize(Canvas, GEngine->GetSmallFont(), FVector2D((bIsADS ? 4.0f : 170.0f), 150.0f));
@@ -859,8 +859,8 @@ void UAimAssistInputModifier::AimAssistDebugDraw(UCanvas* Canvas, APlayerControl
 		DrawDebugCanvas2DBox(Canvas, AssistOuterReticleBounds, ReticleColor, 1.0f);
 	}
 
-	const TArray<FHunterAimAssistTarget>& TargetCache = GetCurrentTargetCache();
-	for (const FHunterAimAssistTarget& Target : TargetCache)
+	const TArray<FLyraAimAssistTarget>& TargetCache = GetCurrentTargetCache();
+	for (const FLyraAimAssistTarget& Target : TargetCache)
 	{
 		if (Target.ScreenBounds.bIsValid)
 		{

@@ -9,15 +9,15 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(AssistProcessor)
 
-UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Elimination_Message, "Hunter.Elimination.Message");
-UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Damage_Message, "Hunter.Damage.Message");
-UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Assist_Message, "Hunter.Assist.Message");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Lyra_Elimination_Message, "Lyra.Elimination.Message");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Lyra_Damage_Message, "Lyra.Damage.Message");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Lyra_Assist_Message, "Lyra.Assist.Message");
 
 void UAssistProcessor::StartListening()
 {
 	UGameplayMessageSubsystem& MessageSubsystem = UGameplayMessageSubsystem::Get(this);
-	AddListenerHandle(MessageSubsystem.RegisterListener(TAG_Hunter_Elimination_Message, this, &ThisClass::OnEliminationMessage));
-	AddListenerHandle(MessageSubsystem.RegisterListener(TAG_Hunter_Damage_Message, this, &ThisClass::OnDamageMessage));
+	AddListenerHandle(MessageSubsystem.RegisterListener(TAG_Lyra_Elimination_Message, this, &ThisClass::OnEliminationMessage));
+	AddListenerHandle(MessageSubsystem.RegisterListener(TAG_Lyra_Damage_Message, this, &ThisClass::OnDamageMessage));
 }
 
 void UAssistProcessor::OnDamageMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload)
@@ -51,7 +51,7 @@ void UAssistProcessor::OnEliminationMessage(FGameplayTag Channel, const FLyraVer
 					if (AssistPS != Payload.Instigator)
 					{
 						FLyraVerbMessage AssistMessage;
-						AssistMessage.Verb = TAG_Hunter_Assist_Message;
+						AssistMessage.Verb = TAG_Lyra_Assist_Message;
 						AssistMessage.Instigator = AssistPS;
 						//@TODO: Get default tags from a player state or save off most recent tags during assist damage?
 						//AssistMessage.InstigatorTags = ;

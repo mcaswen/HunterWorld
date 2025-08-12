@@ -6,7 +6,7 @@
 #include "Math/IntRect.h"
 #include "ScalableFloat.h"
 #include "WorldCollision.h"
-#include "Input/HunterInputModifiers.h"
+#include "Input/LyraInputModifiers.h"
 #include "DrawDebugHelpers.h"
 #include "AimAssistInputModifier.generated.h"
 
@@ -14,8 +14,8 @@ class APlayerController;
 class UInputAction;
 class ULocalPlayer;
 class UShapeComponent;
-class UHunterAimSensitivityData;
-class UHunterSettingsShared;
+class ULyraAimSensitivityData;
+class ULyraSettingsShared;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogAimAssist, Log, All);
 
@@ -66,17 +66,17 @@ struct FAimAssistOwnerViewData
 	/** The movement delta between the current frame and the last */
 	FVector DeltaMovement = FVector::ZeroVector;
 
-	/** The ID of the team that this owner is from. It is populated from the AHunterPlayerState. If the owner does not have a player state, then it will be INDEX_NONE */
+	/** The ID of the team that this owner is from. It is populated from the ALyraPlayerState. If the owner does not have a player state, then it will be INDEX_NONE */
 	int32 TeamID = INDEX_NONE;
 };
 
 /** A container for keeping the state of targets between frames that can be cached */
 USTRUCT(BlueprintType)
-struct FHunterAimAssistTarget
+struct FLyraAimAssistTarget
 {
 	GENERATED_BODY()
 
-	FHunterAimAssistTarget() { ResetTarget(); }
+	FLyraAimAssistTarget() { ResetTarget(); }
 
 	bool IsTargetValid() const { return TargetShapeComponent.IsValid(); }
 
@@ -341,11 +341,11 @@ public:
 	
 	/** The type of targeting to use for this Sensitivity */
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category=Settings, Config)
-	EHunterTargetingType TargetingType = EHunterTargetingType::Normal;
+	ELyraTargetingType TargetingType = ELyraTargetingType::Normal;
 
 	/** Asset that gives us access to the float scalar value being used for sensitivty */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AssetBundles="Client,Server"))
-	TObjectPtr<const UHunterAimSensitivityData> SensitivityLevelTable = nullptr;
+	TObjectPtr<const ULyraAimSensitivityData> SensitivityLevelTable = nullptr;
 	
 protected:
 	
@@ -361,27 +361,27 @@ protected:
 	FRotator UpdateRotationalVelocity(APlayerController* PC, float DeltaTime, FVector CurrentLookInputValue, FVector CurrentMoveInputValue);
 
 	/** Calcualte the pull and slow strengh of a given target */
-	void CalculateTargetStrengths(const FHunterAimAssistTarget& Target, float& OutPullStrength, float& OutSlowStrength) const;
+	void CalculateTargetStrengths(const FLyraAimAssistTarget& Target, float& OutPullStrength, float& OutSlowStrength) const;
 
 	FRotator GetLookRates(const FVector& LookInput);
 	
 	void SwapTargetCaches() { TargetCacheIndex ^= 1; }
-	const TArray<FHunterAimAssistTarget>& GetPreviousTargetCache() const	{ return ((TargetCacheIndex == 0) ? TargetCache1 : TargetCache0); }
-	TArray<FHunterAimAssistTarget>& GetPreviousTargetCache()				{ return ((TargetCacheIndex == 0) ? TargetCache1 : TargetCache0); }
+	const TArray<FLyraAimAssistTarget>& GetPreviousTargetCache() const	{ return ((TargetCacheIndex == 0) ? TargetCache1 : TargetCache0); }
+	TArray<FLyraAimAssistTarget>& GetPreviousTargetCache()				{ return ((TargetCacheIndex == 0) ? TargetCache1 : TargetCache0); }
 
-	const TArray<FHunterAimAssistTarget>& GetCurrentTargetCache() const	{ return ((TargetCacheIndex == 0) ? TargetCache0 : TargetCache1); }
-	TArray<FHunterAimAssistTarget>& GetCurrentTargetCache()				{ return ((TargetCacheIndex == 0) ? TargetCache0 : TargetCache1); }
+	const TArray<FLyraAimAssistTarget>& GetCurrentTargetCache() const	{ return ((TargetCacheIndex == 0) ? TargetCache0 : TargetCache1); }
+	TArray<FLyraAimAssistTarget>& GetCurrentTargetCache()				{ return ((TargetCacheIndex == 0) ? TargetCache0 : TargetCache1); }
 
 	bool HasAnyCurrentTargets() const { return !GetCurrentTargetCache().IsEmpty(); }
 
-	const float GetSensitivtyScalar(const UHunterSettingsShared* SharedSettings) const;
+	const float GetSensitivtyScalar(const ULyraSettingsShared* SharedSettings) const;
 	
 	// Tracking of the current and previous frame's targets
 	UPROPERTY()
-	TArray<FHunterAimAssistTarget> TargetCache0;
+	TArray<FLyraAimAssistTarget> TargetCache0;
 
 	UPROPERTY()
-	TArray<FHunterAimAssistTarget> TargetCache1;
+	TArray<FLyraAimAssistTarget> TargetCache1;
 
 	/** The current in use target cache */
 	uint32 TargetCacheIndex;

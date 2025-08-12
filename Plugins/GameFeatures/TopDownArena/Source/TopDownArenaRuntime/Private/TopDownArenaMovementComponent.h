@@ -2,14 +2,14 @@
 
 #pragma once
 
-#include "Character/HunterCharacterMovementComponent.h"
+#include "Character/LyraCharacterMovementComponent.h"
 
 #include "TopDownArenaMovementComponent.generated.h"
 
 class UObject;
 
 UCLASS()
-class UTopDownArenaMovementComponent : public UHunterCharacterMovementComponent
+class UTopDownArenaMovementComponent : public ULyraCharacterMovementComponent
 {
 	GENERATED_BODY()
 

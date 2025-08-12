@@ -5,10 +5,10 @@
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
 #include "ShooterTestsInputTestHelper.h"
 
-class AHunterCharacter;
+class ALyraCharacter;
 class USkeletalMeshComponent;
 
-/// Class which consolidates the Hunter Actor information that is shared amongst tests.
+/// Class which consolidates the Lyra Actor information that is shared amongst tests.
 class FShooterTestsActorTestHelper
 {
 public:
@@ -27,14 +27,14 @@ public:
 	bool IsPawnFullySpawned();
 
 	/**
-	* Gets the Hunter character which was associated with the Pawn used during the construction of the object.
+	* Gets the Lyra character which was associated with the Pawn used during the construction of the object.
 	*
-	* @return constant pointer to the HunterCharacter
+	* @return constant pointer to the LyraCharacter
 	*/
-	const AHunterCharacter* GetHunterCharacter() const { return HunterCharacter; }
+	const ALyraCharacter* GetLyraCharacter() const { return LyraCharacter; }
 	
 	/**
-	* Gets the skeletal mesh component of the associated Hunter Character.
+	* Gets the skeletal mesh component of the associated Lyra Character.
 	*
 	* @return pointer to the SkeletalMeshComponent
 	*/
@@ -42,7 +42,7 @@ public:
 
 private:
 	/** Reference to our player in the level. */
-	AHunterCharacter* HunterCharacter{ nullptr };
+	ALyraCharacter* LyraCharacter{ nullptr };
 
 	/** Reference to the player's skeletal mesh component. */
 	USkeletalMeshComponent* SkeletalMeshComponent;
@@ -55,7 +55,7 @@ private:
 };
 
 /**
- * Inherited from FShooterTestsActorTestHelper, adds FShooterTestsPawnTestActions to be used for interacting with the Hunter player and triggering animations.
+ * Inherited from FShooterTestsActorTestHelper, adds FShooterTestsPawnTestActions to be used for interacting with the Lyra player and triggering animations.
  *
  * @see FShooterTestsActorTestHelper
  */
@@ -77,7 +77,7 @@ public:
 	explicit FShooterTestsActorInputTestHelper(APawn* Pawn);
 
 	/** 
-	* Simulates input triggers on the Hunter character.
+	* Simulates input triggers on the Lyra character.
 	* 
 	* @param Type - InputActionType used to specify which input to perform.
 	*/

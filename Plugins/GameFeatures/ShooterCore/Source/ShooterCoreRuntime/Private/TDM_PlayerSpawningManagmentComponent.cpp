@@ -4,9 +4,9 @@
 
 #include "Engine/World.h"
 #include "GameFramework/PlayerState.h"
-#include "GameModes/HunterGameState.h"
+#include "GameModes/LyraGameState.h"
 #include "Player/LyraPlayerStart.h"
-#include "Teams/HunterTeamSubsystem.h"
+#include "Teams/LyraTeamSubsystem.h"
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(TDM_PlayerSpawningManagmentComponent)
 
@@ -19,7 +19,7 @@ UTDM_PlayerSpawningManagmentComponent::UTDM_PlayerSpawningManagmentComponent(con
 
 AActor* UTDM_PlayerSpawningManagmentComponent::OnChoosePlayerStart(AController* Player, TArray<ALyraPlayerStart*>& PlayerStarts)
 {
-	UHunterTeamSubsystem* TeamSubsystem = GetWorld()->GetSubsystem<UHunterTeamSubsystem>();
+	ULyraTeamSubsystem* TeamSubsystem = GetWorld()->GetSubsystem<ULyraTeamSubsystem>();
 	if (!ensure(TeamSubsystem))
 	{
 		return nullptr;
@@ -33,7 +33,7 @@ AActor* UTDM_PlayerSpawningManagmentComponent::OnChoosePlayerStart(AController* 
 		return nullptr;
 	}
 
-	AHunterGameState* GameState = GetGameStateChecked<AHunterGameState>();
+	ALyraGameState* GameState = GetGameStateChecked<ALyraGameState>();
 
 	ALyraPlayerStart* BestPlayerStart = nullptr;
 	double MaxDistance = 0;

@@ -1,3 +1,0 @@
-﻿# Hunter Settings
-
-Todo

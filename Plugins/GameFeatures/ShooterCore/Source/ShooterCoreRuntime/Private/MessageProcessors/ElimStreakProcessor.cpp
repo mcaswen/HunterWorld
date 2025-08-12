@@ -10,13 +10,13 @@
 
 namespace ElimStreak
 {
-	UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Elimination_Message, "Hunter.Elimination.Message");
+	UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Lyra_Elimination_Message, "Lyra.Elimination.Message");
 }
 
 void UElimStreakProcessor::StartListening()
 {
 	UGameplayMessageSubsystem& MessageSubsystem = UGameplayMessageSubsystem::Get(this);
-	AddListenerHandle(MessageSubsystem.RegisterListener(ElimStreak::TAG_Hunter_Elimination_Message, this, &ThisClass::OnEliminationMessage));
+	AddListenerHandle(MessageSubsystem.RegisterListener(ElimStreak::TAG_Lyra_Elimination_Message, this, &ThisClass::OnEliminationMessage));
 }
 
 void UElimStreakProcessor::OnEliminationMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload)

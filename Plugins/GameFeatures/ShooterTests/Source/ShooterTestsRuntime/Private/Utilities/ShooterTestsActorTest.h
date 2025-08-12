@@ -7,10 +7,10 @@
 #if WITH_AUTOMATION_TESTS
 
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
-#include "Character/HunterCharacter.h"
+#include "Character/LyraCharacter.h"
 #include "Components/MapTestSpawner.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "GameModes/HunterExperienceManagerComponent.h"
+#include "GameModes/LyraExperienceManagerComponent.h"
 #include "Helpers/CQTestAssetHelper.h"
 #include "ShooterTestsAnimationTestHelper.h"
 #include "ShooterTestsInputTestHelper.h"
@@ -67,7 +67,7 @@ struct ShooterTestsActorBaseTest : public TTest<Derived, AsserterType>
 			return false;
 		}
 
-		UHunterExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<UHunterExperienceManagerComponent>();
+		ULyraExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<ULyraExperienceManagerComponent>();
 		if (ExperienceComponent == nullptr)
 		{
 			return false;
@@ -76,10 +76,10 @@ struct ShooterTestsActorBaseTest : public TTest<Derived, AsserterType>
 		return ExperienceComponent->IsExperienceLoaded();
 	}
 
-	/** Get our Hunter Player Pawn and all associated systems and functionality needed for our Player. */
+	/** Get our Lyra Player Pawn and all associated systems and functionality needed for our Player. */
 	virtual void PreparePlayerPawn()
 	{
-		Player = Cast<AHunterCharacter>(Spawner->FindFirstPlayerPawn());
+		Player = Cast<ALyraCharacter>(Spawner->FindFirstPlayerPawn());
 		ASSERT_THAT(IsNotNull(Player));
 
 		AbilitySystemComponent = Player->GetLyraAbilitySystemComponent();
@@ -100,7 +100,7 @@ struct ShooterTestsActorBaseTest : public TTest<Derived, AsserterType>
 		return !bIsCurrentlySpawning;
 	}
 
-	/** Setup the test by loading in the specified level and making sure that the Hunter player is fully spawned in before continuing. */
+	/** Setup the test by loading in the specified level and making sure that the Lyra player is fully spawned in before continuing. */
 	virtual void Setup() override
 	{
 		ASSERT_THAT(IsNotNull(Spawner));
@@ -115,7 +115,7 @@ struct ShooterTestsActorBaseTest : public TTest<Derived, AsserterType>
 	}
 
 	/** Reference to our player in the level. */
-	AHunterCharacter* Player{ nullptr };
+	ALyraCharacter* Player{ nullptr };
 
 	/** Object to handle loading of our desired level. */
 	TUniquePtr<FMapTestSpawner> Spawner{ nullptr };
@@ -155,7 +155,7 @@ struct ShooterTestsActorAnimationTest : public ShooterTestsActorBaseTest<Derived
 	ShooterTestsActorAnimationTest(const FString& MapName) : ShooterTestsActorBaseTest<Derived, AsserterType>(MapName) { }
 
 	/**
-	 * Calls the parent method to get our Hunter Player Pawn and all associated systems and functionality needed for our Player before setting up functionality needed for input handling and animations.
+	 * Calls the parent method to get our Lyra Player Pawn and all associated systems and functionality needed for our Player before setting up functionality needed for input handling and animations.
 	 * 
 	 * @see ShooterTestsActorBaseTest<Derived, AsserterType>::PreparePlayerPawn()
 	 */

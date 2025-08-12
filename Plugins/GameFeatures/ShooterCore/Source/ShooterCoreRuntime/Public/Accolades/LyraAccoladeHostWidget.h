@@ -1,18 +1,19 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
-#include "Accolades/HunterAccoladeDefinition.h"
+#include "Accolades/LyraAccoladeDefinition.h"
 #include "AsyncMixin.h"
 #include "CommonUserWidget.h"
 #include "GameFramework/GameplayMessageSubsystem.h"
 
-#include "HunterAccoladeHostWidget.generated.h"
+#include "LyraAccoladeHostWidget.generated.h"
 
 class UObject;
 class USoundBase;
 class UUserWidget;
 struct FDataRegistryAcquireResult;
-struct FHunterNotificationMessage;
+struct FLyraNotificationMessage;
 
 USTRUCT(BlueprintType)
 struct FPendingAccoladeEntry
@@ -20,7 +21,7 @@ struct FPendingAccoladeEntry
 	GENERATED_BODY();
 
 	UPROPERTY(BlueprintReadOnly)
-	FHunterAccoladeDefinitionRow Row; 
+	FLyraAccoladeDefinitionRow Row; 
 
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<USoundBase> Sound = nullptr;
@@ -42,7 +43,7 @@ struct FPendingAccoladeEntry
  * 
  */
 UCLASS(BlueprintType)
-class UHunterAccoladeHostWidget : public UCommonUserWidget, public FAsyncMixin
+class ULyraAccoladeHostWidget : public UCommonUserWidget, public FAsyncMixin
 {
 	GENERATED_BODY()
 
@@ -78,7 +79,7 @@ private:
 	TArray<FPendingAccoladeEntry> PendingAccoladeDisplays;
 
 
-	void OnNotificationMessage(FGameplayTag Channel, const FHunterNotificationMessage& Notification);
+	void OnNotificationMessage(FGameplayTag Channel, const FLyraNotificationMessage& Notification);
 	void OnRegistryLoadCompleted(const FDataRegistryAcquireResult& AccoladeHandle, int32 SequenceID);
 
 	void ConsiderLoadedAccolades();

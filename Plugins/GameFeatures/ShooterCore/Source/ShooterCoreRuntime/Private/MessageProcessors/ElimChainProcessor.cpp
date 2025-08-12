@@ -10,13 +10,13 @@
 
 namespace ElimChain
 {
-	UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_Elimination_Message, "Hunter.Elimination.Message");
+	UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Lyra_Elimination_Message, "Lyra.Elimination.Message");
 }
 
 void UElimChainProcessor::StartListening()
 {
 	UGameplayMessageSubsystem& MessageSubsystem = UGameplayMessageSubsystem::Get(this);
-	AddListenerHandle(MessageSubsystem.RegisterListener(ElimChain::TAG_Hunter_Elimination_Message, this, &ThisClass::OnEliminationMessage));
+	AddListenerHandle(MessageSubsystem.RegisterListener(ElimChain::TAG_Lyra_Elimination_Message, this, &ThisClass::OnEliminationMessage));
 }
 
 void UElimChainProcessor::OnEliminationMessage(FGameplayTag Channel, const FLyraVerbMessage& Payload)

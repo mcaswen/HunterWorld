@@ -1,16 +1,18 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
 #pragma once
 
 #include "Engine/DataAsset.h"
 #include "Engine/DataTable.h"
 #include "GameplayTagContainer.h"
 
-#include "HunterAccoladeDefinition.generated.h"
+#include "LyraAccoladeDefinition.generated.h"
 
 class UObject;
 class USoundBase;
 
 USTRUCT(BlueprintType)
-struct FHunterAccoladeDefinitionRow : public FTableRowBase
+struct FLyraAccoladeDefinitionRow : public FTableRowBase
 {
 	GENERATED_BODY()
 
@@ -49,7 +51,7 @@ public:
  * 
  */
 UCLASS(BlueprintType)
-class UHunterAccoladeDefinition : public UDataAsset
+class ULyraAccoladeDefinition : public UDataAsset
 {
 	GENERATED_BODY()
 

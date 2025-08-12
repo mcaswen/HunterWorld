@@ -2,24 +2,24 @@
 
 #include "ShooterTestsActorTestHelper.h"
 
-#include "Character/HunterCharacter.h"
+#include "Character/LyraCharacter.h"
 #include "Components/SkeletalMeshComponent.h"
 
 FShooterTestsActorTestHelper::FShooterTestsActorTestHelper(APawn* Pawn)
 {
 	checkf(Pawn, TEXT("Pawn is invalid."));
 
-	HunterCharacter = Cast<AHunterCharacter>(Pawn);
-	checkf(HunterCharacter, TEXT("Cannot cast Pawn to a Hunter Character."));
+	LyraCharacter = Cast<ALyraCharacter>(Pawn);
+	checkf(LyraCharacter, TEXT("Cannot cast Pawn to a Lyra Character."));
 
-	UActorComponent* ActorComponent = HunterCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass());
-	checkf(ActorComponent, TEXT("Cannot find SkeletalMeshComponent from the HunterCharacter."));
+	UActorComponent* ActorComponent = LyraCharacter->GetComponentByClass(USkeletalMeshComponent::StaticClass());
+	checkf(ActorComponent, TEXT("Cannot find SkeletalMeshComponent from the LyraCharacter."));
 
 	SkeletalMeshComponent = Cast<USkeletalMeshComponent>(ActorComponent);
 	checkf(SkeletalMeshComponent, TEXT("Cannot cast component to SkeletalMeshComponent."));
 	
-	AbilitySystemComponent = HunterCharacter->GetLyraAbilitySystemComponent();
-	checkf(AbilitySystemComponent, TEXT("Hunter Character does not have a valid AbilitySystemComponent."));
+	AbilitySystemComponent = LyraCharacter->GetLyraAbilitySystemComponent();
+	checkf(AbilitySystemComponent, TEXT("Lyra Character does not have a valid AbilitySystemComponent."));
 
 	const FName CharacterSpawn = TEXT("GameplayCue.Character.Spawn");
 	GameplayCueCharacterSpawnTag = FGameplayTag::RequestGameplayTag(CharacterSpawn, true);

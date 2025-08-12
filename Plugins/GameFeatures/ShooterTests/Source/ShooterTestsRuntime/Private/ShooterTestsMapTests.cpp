@@ -5,14 +5,14 @@
 #if WITH_AUTOMATION_TESTS
 
 #include "AbilitySystem/LyraAbilitySystemComponent.h"
-#include "AbilitySystem/Attributes/HunterHealthSet.h"
-#include "Character/HunterCharacter.h"
+#include "AbilitySystem/Attributes/LyraHealthSet.h"
+#include "Character/LyraCharacter.h"
 #include "Character/LyraHealthComponent.h"
 #include "Components/MapTestSpawner.h"
 #include "Helpers/CQTestAssetHelper.h"
-#include "HunterGameplayTags.h"
+#include "LyraGameplayTags.h"
 #include "ObjectBuilder.h"
-#include "System/HunterAssetManager.h"
+#include "System/LyraAssetManager.h"
 #include "System/LyraGameData.h"
 
 /**
@@ -34,18 +34,18 @@ TEST_CLASS_WITH_FLAGS(AbilitySpawnerMapTest, "Project.Functional Tests.ShooterTe
 {
 	TUniquePtr<FMapTestSpawner> Spawner;
 
-	AHunterCharacter* Player{ nullptr };
+	ALyraCharacter* Player{ nullptr };
 	AActor* GameplayEffectPad{ nullptr };
 	ULyraAbilitySystemComponent* AbilitySystemComponent{ nullptr };
-	const UHunterHealthSet* HealthSet{ nullptr };
+	const ULyraHealthSet* HealthSet{ nullptr };
 
 	// Fetches the GameplayEffect which will trigger and apply the damage specified to the player
 	void DoDamageToPlayer(double Damage)
 	{
-		const TSubclassOf<UGameplayEffect> DamageEffect = UHunterAssetManager::GetSubclass(ULyraGameData::Get().DamageGameplayEffect_SetByCaller);
+		const TSubclassOf<UGameplayEffect> DamageEffect = ULyraAssetManager::GetSubclass(ULyraGameData::Get().DamageGameplayEffect_SetByCaller);
 		FGameplayEffectSpecHandle SpecHandle = AbilitySystemComponent->MakeOutgoingSpec(DamageEffect, 1.0, AbilitySystemComponent->MakeEffectContext());
 		ASSERT_THAT(IsTrue(SpecHandle.IsValid()));
-		SpecHandle.Data->SetSetByCallerMagnitude(HunterGameplayTags::SetByCaller_Damage, Damage);
+		SpecHandle.Data->SetSetByCallerMagnitude(LyraGameplayTags::SetByCaller_Damage, Damage);
 		FActiveGameplayEffectHandle Handle = AbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
 		ASSERT_THAT(IsTrue(Handle.WasSuccessfullyApplied()));
 	}
@@ -89,11 +89,11 @@ TEST_CLASS_WITH_FLAGS(AbilitySpawnerMapTest, "Project.Functional Tests.ShooterTe
 		TestCommandBuilder
 			.StartWhen([this]() { return nullptr != Spawner->FindFirstPlayerPawn(); }, LoadingScreenTimeout)
 			.Do([this]() {
-				Player = CastChecked<AHunterCharacter>(Spawner->FindFirstPlayerPawn());
+				Player = CastChecked<ALyraCharacter>(Spawner->FindFirstPlayerPawn());
 				AbilitySystemComponent = Player->GetLyraAbilitySystemComponent();
 				ASSERT_THAT(IsNotNull(AbilitySystemComponent));
 
-				HealthSet = AbilitySystemComponent->GetSetChecked<UHunterHealthSet>();
+				HealthSet = AbilitySystemComponent->GetSetChecked<ULyraHealthSet>();
 				ASSERT_THAT(IsTrue(HealthSet->GetHealth() > 0));
 				ASSERT_THAT(IsTrue(HealthSet->GetHealth() == HealthSet->GetMaxHealth()));
 			});

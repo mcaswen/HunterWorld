@@ -6,13 +6,13 @@
 
 #if ENABLE_SHOOTERTESTS_NETWORK_TEST
 
-#include "Character/HunterCharacter.h"
+#include "Character/LyraCharacter.h"
 #include "Commands/TestCommandBuilder.h"
 #include "Editor/UnrealEdEngine.h"
 #include "Engine/LocalPlayer.h"
 #include "Engine/NetConnection.h"
-#include "GameModes/HunterExperienceManagerComponent.h"
-#include "GameModes/HunterGameMode.h"
+#include "GameModes/LyraExperienceManagerComponent.h"
+#include "GameModes/LyraGameMode.h"
 #include "Kismet/GameplayStatics.h"
 #include "LevelEditor.h"
 #include "Modules/ModuleManager.h"
@@ -222,7 +222,7 @@ private:
 		SessionParams.WorldType = EPlaySessionWorldType::PlayInEditor;
 		SessionParams.DestinationSlateViewport = LevelEditorModule.GetFirstActiveViewport();
 		SessionParams.EditorPlaySettings = PlaySettings;
-		SessionParams.GameModeOverride = AHunterGameMode::StaticClass();
+		SessionParams.GameModeOverride = ALyraGameMode::StaticClass();
 
 		GUnrealEd->RequestPlaySession(SessionParams);
 		GUnrealEd->StartQueuedPlaySessionRequest();
@@ -349,7 +349,7 @@ private:
 			return false;
 		}
 
-		UHunterExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<UHunterExperienceManagerComponent>();
+		ULyraExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<ULyraExperienceManagerComponent>();
 		if (ExperienceComponent == nullptr)
 		{
 			return false;
@@ -430,13 +430,13 @@ private:
 	*/
 	void FetchConnectedPlayer(FShooterTestsNetworkState<NetworkActorType>& NetworkState)
 	{
-		const AHunterCharacter* RegisteredPlayer = NetworkState.LocalPlayer->GetHunterCharacter();
+		const ALyraCharacter* RegisteredPlayer = NetworkState.LocalPlayer->GetLyraCharacter();
 
 		TArray<AActor*> Pawns;
-		UGameplayStatics::GetAllActorsOfClass(NetworkState.World, AHunterCharacter::StaticClass(), Pawns);
+		UGameplayStatics::GetAllActorsOfClass(NetworkState.World, ALyraCharacter::StaticClass(), Pawns);
 		for (AActor* Pawn : Pawns)
 		{
-			AHunterCharacter* Player = Cast<AHunterCharacter>(Pawn);
+			ALyraCharacter* Player = Cast<ALyraCharacter>(Pawn);
 			if (Player == nullptr)
 			{
 				continue;
@@ -476,7 +476,7 @@ private:
 	*/
 	const int32 ClientCount{ 1 };
 
-	/** Duration to allow for the Hunter loading screen. */
+	/** Duration to allow for the Lyra loading screen. */
 	const FTimespan LoadingScreenTimeout = FTimespan::FromSeconds(30);
 
 	/** Server's network state. */

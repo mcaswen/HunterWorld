@@ -12,7 +12,7 @@ public class ShooterTestsRuntime : ModuleRules
 			new string[]
 			{
 				"Core",
-				"HunterGame",
+				"LyraGame",
 				"GameplayTags",
 				"GameplayAbilities",
 				"ModularGameplay",

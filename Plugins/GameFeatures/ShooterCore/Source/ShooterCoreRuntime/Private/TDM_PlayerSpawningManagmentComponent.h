@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Player/HunterPlayerSpawningManagerComponent.h"
+#include "Player/LyraPlayerSpawningManagerComponent.h"
 
 #include "TDM_PlayerSpawningManagmentComponent.generated.h"
 
@@ -15,7 +15,7 @@ class UObject;
  * 
  */
 UCLASS()
-class UTDM_PlayerSpawningManagmentComponent : public UHunterPlayerSpawningManagerComponent
+class UTDM_PlayerSpawningManagmentComponent : public ULyraPlayerSpawningManagerComponent
 {
 	GENERATED_BODY()
 

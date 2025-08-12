@@ -1,30 +1,30 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#include "Accolades/HunterAccoladeHostWidget.h"
+#include "Accolades/LyraAccoladeHostWidget.h"
 
 #include "DataRegistrySubsystem.h"
-#include "HunterLogChannels.h"
-#include "Messages/HunterNotificationMessage.h"
+#include "LyraLogChannels.h"
+#include "Messages/LyraNotificationMessage.h"
 #include "Sound/SoundBase.h"
 #include "TimerManager.h"
 
-#include UE_INLINE_GENERATED_CPP_BY_NAME(HunterAccoladeHostWidget)
+#include UE_INLINE_GENERATED_CPP_BY_NAME(LyraAccoladeHostWidget)
 
 class UUserWidget;
 
-UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Hunter_ShooterGame_Accolade, "Hunter.ShooterGame.Accolade");
+UE_DEFINE_GAMEPLAY_TAG_STATIC(TAG_Lyra_ShooterGame_Accolade, "Lyra.ShooterGame.Accolade");
 
 static FName NAME_AccoladeRegistryID("Accolades");
 
-void UHunterAccoladeHostWidget::NativeConstruct()
+void ULyraAccoladeHostWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
 	UGameplayMessageSubsystem& MessageSubsystem = UGameplayMessageSubsystem::Get(this);
-	ListenerHandle = MessageSubsystem.RegisterListener(TAG_Hunter_AddNotification_Message, this, &ThisClass::OnNotificationMessage);
+	ListenerHandle = MessageSubsystem.RegisterListener(TAG_Lyra_AddNotification_Message, this, &ThisClass::OnNotificationMessage);
 }
 
-void UHunterAccoladeHostWidget::NativeDestruct()
+void ULyraAccoladeHostWidget::NativeDestruct()
 {
 	UGameplayMessageSubsystem& MessageSubsystem = UGameplayMessageSubsystem::Get(this);
 	MessageSubsystem.UnregisterListener(ListenerHandle);
@@ -34,9 +34,9 @@ void UHunterAccoladeHostWidget::NativeDestruct()
 	Super::NativeDestruct();
 }
 
-void UHunterAccoladeHostWidget::OnNotificationMessage(FGameplayTag Channel, const FHunterNotificationMessage& Notification)
+void ULyraAccoladeHostWidget::OnNotificationMessage(FGameplayTag Channel, const FLyraNotificationMessage& Notification)
 {
-	if (Notification.TargetChannel == TAG_Hunter_ShooterGame_Accolade)
+	if (Notification.TargetChannel == TAG_Lyra_ShooterGame_Accolade)
 	{
 		// Ignore notifications for other players
 		if (Notification.TargetPlayer != nullptr)
@@ -55,15 +55,15 @@ void UHunterAccoladeHostWidget::OnNotificationMessage(FGameplayTag Channel, cons
 		FDataRegistryId ItemID(NAME_AccoladeRegistryID, Notification.PayloadTag.GetTagName());
 		if (!UDataRegistrySubsystem::Get()->AcquireItem(ItemID, FDataRegistryItemAcquiredCallback::CreateUObject(this, &ThisClass::OnRegistryLoadCompleted, NextID)))
 		{
-			UE_LOG(LogHunter, Error, TEXT("Failed to find accolade registry for tag %s, accolades will not appear"), *Notification.PayloadTag.GetTagName().ToString());
+			UE_LOG(LogLyra, Error, TEXT("Failed to find accolade registry for tag %s, accolades will not appear"), *Notification.PayloadTag.GetTagName().ToString());
 			--AllocatedSequenceID;
 		}
 	}
 }
 
-void UHunterAccoladeHostWidget::OnRegistryLoadCompleted(const FDataRegistryAcquireResult& AccoladeHandle, int32 SequenceID)
+void ULyraAccoladeHostWidget::OnRegistryLoadCompleted(const FDataRegistryAcquireResult& AccoladeHandle, int32 SequenceID)
 {
-	if (const FHunterAccoladeDefinitionRow* AccoladeRow = AccoladeHandle.GetItem<FHunterAccoladeDefinitionRow>())
+	if (const FLyraAccoladeDefinitionRow* AccoladeRow = AccoladeHandle.GetItem<FLyraAccoladeDefinitionRow>())
 	{
 		FPendingAccoladeEntry& PendingEntry = PendingAccoladeLoads.AddDefaulted_GetRef();
 		PendingEntry.Row = *AccoladeRow;
@@ -91,7 +91,7 @@ void UHunterAccoladeHostWidget::OnRegistryLoadCompleted(const FDataRegistryAcqui
 	}
 }
 
-void UHunterAccoladeHostWidget::ConsiderLoadedAccolades()
+void ULyraAccoladeHostWidget::ConsiderLoadedAccolades()
 {
 	int32 PendingIndexToDisplay;
 	do
@@ -108,7 +108,7 @@ void UHunterAccoladeHostWidget::ConsiderLoadedAccolades()
 	} while (PendingIndexToDisplay != INDEX_NONE);
 }
 
-void UHunterAccoladeHostWidget::ProcessLoadedAccolade(const FPendingAccoladeEntry& Entry)
+void ULyraAccoladeHostWidget::ProcessLoadedAccolade(const FPendingAccoladeEntry& Entry)
 {
 	if (Entry.Row.LocationTag == LocationName)
 	{
@@ -139,7 +139,7 @@ void UHunterAccoladeHostWidget::ProcessLoadedAccolade(const FPendingAccoladeEntr
 	}
 }
 
-void UHunterAccoladeHostWidget::DisplayNextAccolade()
+void ULyraAccoladeHostWidget::DisplayNextAccolade()
 {
 	if (PendingAccoladeDisplays.Num() > 0)
 	{
@@ -150,7 +150,7 @@ void UHunterAccoladeHostWidget::DisplayNextAccolade()
 	}
 }
 
-void UHunterAccoladeHostWidget::PopDisplayedAccolade()
+void ULyraAccoladeHostWidget::PopDisplayedAccolade()
 {
 	if (PendingAccoladeDisplays.Num() > 0)
 	{
