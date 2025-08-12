@@ -8,12 +8,12 @@
 			"Name": "HunterWorld",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		}
+		},
 		{
 			"Name": "TestDemo",
 			"Type": "Runtime",
 			"LoadingPhase": "Default"
-		}
+		},
 		{
 			"Name": "LyraGame",
 			"Type": "Runtime",
